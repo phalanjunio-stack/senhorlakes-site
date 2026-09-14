@@ -119,7 +119,7 @@ export default function Hero() {
 
         <Reveal delay={160}>
           <p className="mt-6 max-w-md text-lg text-paper/90">
-            Energia, presença e som ao vivo. Quatro histórias, um só som.
+            Energia, presença e som ao vivo. Cinco histórias, um só som.
           </p>
         </Reveal>
 

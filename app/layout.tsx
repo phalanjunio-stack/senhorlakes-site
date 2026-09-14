@@ -7,7 +7,7 @@ import { PlayerProvider } from "@/components/player/PlayerProvider";
 import PlayerBar from "@/components/player/PlayerBar";
 import { FxProvider } from "@/components/fx/FxProvider";
 import FxControls from "@/components/fx/FxControls";
-import { band } from "@/lib/data";
+import { band, members } from "@/lib/data";
 import { siteUrl } from "@/lib/site";
 
 const archivo = Archivo({
@@ -68,7 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     image: `${siteUrl}/img/banda.jpg`,
     address: { "@type": "PostalAddress", addressLocality: band.city, addressCountry: "BR" },
     sameAs: [band.instagram, band.youtube, band.spotify].filter(Boolean),
-    member: ["Davisson", "Alan", "Wither", "Vanildo"].map((name) => ({ "@type": "Person", name })),
+    member: members.map((m) => ({ "@type": "Person", name: m.name, jobTitle: m.role })),
   };
 
   return (

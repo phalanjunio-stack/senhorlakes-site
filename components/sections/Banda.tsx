@@ -13,7 +13,7 @@ export default function Banda() {
         title="A Banda"
         aside={
           <>
-            Quatro histórias.
+            Cinco histórias.
             <br />
             Um só som.
           </>

@@ -85,8 +85,9 @@ export const band = {
 export const members: Member[] = [
   { name: "Davisson", role: "Voz / baixo", framePosition: "5%" },
   { name: "Alan", role: "Voz / guitarra / violão", framePosition: "27%" },
-  { name: "Wither", role: "Bateria", framePosition: "49%" },
-  { name: "Vanildo", role: "Teclado", framePosition: "70%" },
+  { name: "Lauro", role: "Voz / guitarra", framePosition: "49%" },
+  { name: "Wither", role: "Bateria", framePosition: "70%" },
+  { name: "Vanildo", role: "Teclado", framePosition: "92%" },
 ];
 
 /* ── FAIXAS ────────────────────────────────────────────── */
@@ -181,7 +182,7 @@ export const photos: Photo[] = [
   { id: "p3", src: null, alt: "Espaço reservado", category: "bastidores", caption: "Passagem de som", ratio: 1 },
   { id: "p4", src: null, alt: "Espaço reservado", category: "shows", caption: "Plateia cantando junto", ratio: 3 / 2 },
   { id: "p5", src: null, alt: "Espaço reservado", category: "estrada", caption: "A caminho do próximo", ratio: 4 / 5 },
-  { id: "p6", src: null, alt: "Espaço reservado", category: "retratos", caption: "Davisson", ratio: 2 / 3 },
+  { id: "p6", src: null, alt: "Espaço reservado", category: "retratos", caption: "Lauro", ratio: 2 / 3 },
   { id: "p7", src: null, alt: "Espaço reservado", category: "bastidores", caption: "Antes de subir", ratio: 3 / 2 },
   { id: "p8", src: null, alt: "Espaço reservado", category: "shows", caption: "Luz e volume", ratio: 1 },
   { id: "p9", src: null, alt: "Espaço reservado", category: "estrada", caption: "Estrada de Minas", ratio: 16 / 9 },
