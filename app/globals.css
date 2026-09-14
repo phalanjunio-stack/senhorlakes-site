@@ -604,3 +604,53 @@ a {
     transform: scaleY(1);
   }
 }
+
+/* ──────────────────────────────────────────────────────────
+   HOLOFOTE DE COR
+   A imagem do topo fica em preto e branco e o mouse revela a
+   cor num círculo embaixo dele. São duas cópias empilhadas: a
+   de baixo dessaturada, a de cima colorida e recortada por uma
+   máscara radial centrada em --px / --py.
+   ────────────────────────────────────────────────────────── */
+
+@layer components {
+  .spotlight {
+    opacity: 0;
+    transition: opacity 500ms ease;
+    -webkit-mask-image: radial-gradient(
+      circle var(--spot, 20rem) at var(--px, 50%) var(--py, 50%),
+      #000 0%,
+      rgba(0, 0, 0, 0.92) 40%,
+      rgba(0, 0, 0, 0.45) 66%,
+      transparent 85%
+    );
+    mask-image: radial-gradient(
+      circle var(--spot, 20rem) at var(--px, 50%) var(--py, 50%),
+      #000 0%,
+      rgba(0, 0, 0, 0.92) 40%,
+      rgba(0, 0, 0, 0.45) 66%,
+      transparent 85%
+    );
+  }
+
+  /* acende só enquanto o ponteiro estiver dentro da seção */
+  .motion-on .is-pointing .spotlight {
+    opacity: 1;
+  }
+
+  /* Sem mouse ou com movimento desligado não há como revelar nada,
+     então a imagem aparece colorida e inteira. */
+  html:not(.motion-on) .spotlight {
+    opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  @media (pointer: coarse) {
+    .spotlight {
+      opacity: 1;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+}

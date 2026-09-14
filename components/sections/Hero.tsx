@@ -48,15 +48,27 @@ export default function Hero() {
             "translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -16px), 0) scale(1.03)",
         }}
       >
-        {/* Arte de capa da banda. Sem filtros: ela já vem tratada, com
-            o próprio azul e dourado — dessaturar aqui só estragaria. */}
+        {/* Camada de baixo: a arte dessaturada. É o que se vê parado. */}
         <Image
           src="/img/capa.jpg"
           alt="Os integrantes do Senhor Lakes"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_38%]"
+          className="object-cover object-[center_38%] grayscale contrast-[1.08] brightness-[0.88]"
+        />
+
+        {/* Camada de cima: a mesma arte colorida, recortada por uma
+            máscara redonda que segue o cursor. O alt fica vazio porque
+            é a mesma imagem da camada de baixo. */}
+        <Image
+          src="/img/capa.jpg"
+          alt=""
+          aria-hidden
+          fill
+          priority
+          sizes="100vw"
+          className="spotlight object-cover object-[center_38%]"
         />
       </div>
 
