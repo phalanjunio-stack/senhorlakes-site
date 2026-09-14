@@ -151,13 +151,16 @@ a {
   color: var(--color-gold);
 }
 
-/* Título do topo. Fica aqui, e não numa classe utilitária arbitrária,
-   porque é o elemento de assinatura do site e o tamanho é ajustado
-   com frequência. */
+/* Título do topo.
+   REGRA: as três linhas não podem alcançar os rostos da foto. Os rostos
+   ficam no terço de cima; o título sobe a partir do rodapé, então cada
+   aumento aqui avança sobre eles. 7vw é o teto testado — acima disso o
+   "SEN" encosta na cara do primeiro integrante. Se precisar de mais
+   presença, use peso ou espaçamento, não tamanho. */
 .hero-title {
-  font-size: clamp(3.2rem, 9.5vw, 7.4rem);
-  line-height: 0.76;
-  letter-spacing: -0.07em;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  line-height: 0.78;
+  letter-spacing: -0.065em;
 }
 
 /* Aparição no scroll */

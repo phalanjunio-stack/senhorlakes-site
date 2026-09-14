@@ -61,6 +61,18 @@ export default function Hero() {
         }}
       />
 
+      {/* Sombra lateral sob a coluna de texto. Sem ela o título cai em
+          cima do rosto do primeiro integrante e os dois brigam; com ela
+          aquele lado da foto vira penumbra e o texto tem onde pousar. */}
+      <div
+        className="absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            "linear-gradient(to right, rgba(8,8,8,0.84) 0%, rgba(8,8,8,0.6) 26%, rgba(8,8,8,0.18) 48%, transparent 62%)",
+        }}
+      />
+
       {/* facho de luz que segue o mouse */}
       <div
         className="absolute inset-0 opacity-70 mix-blend-screen"
@@ -151,7 +163,10 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={320}>
-          <nav className="mt-10 flex flex-wrap gap-x-7 gap-y-3" aria-label="Redes sociais da banda">
+          <nav
+            className="mt-10 flex flex-wrap gap-x-7 gap-y-3 pr-20 lg:pr-0"
+            aria-label="Redes sociais da banda"
+          >
             {socials.map(({ href, label, Icon }) => (
               <a
                 key={label}
