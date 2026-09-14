@@ -141,3 +141,32 @@ Quem tem "reduzir movimento" ligado no sistema abre o site com tudo parado —
 mas se clicar no botão de movimento, a escolha explícita vence. O som nunca
 toca antes do primeiro clique, porque o navegador não permite, e pode ser
 desligado de vez.
+
+## Publicado
+
+**https://phalanjunio-stack.github.io/senhorlakes-site/**
+
+Fica no branch `gh-pages` do repositório. Para atualizar depois de mexer
+no site:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/senhorlakes-site NEXT_PUBLIC_SITE_URL=https://phalanjunio-stack.github.io/senhorlakes-site npm run build
+```
+
+e publicar o conteúdo de `out/` no branch `gh-pages`.
+
+Para o deploy virar automático a cada push, rode uma vez:
+
+```bash
+gh auth refresh -s workflow
+```
+
+e mova `.deploy/pages.yml.txt` para `.github/workflows/pages.yml`. O
+token atual não tem permissão para criar workflows, por isso o arquivo
+está guardado fora dessa pasta.
+
+### Quando houver domínio próprio
+
+Troque `siteUrl` em `lib/site.ts`, aponte o domínio para o GitHub Pages
+e apague o `NEXT_PUBLIC_BASE_PATH` — na raiz de um domínio o site não
+precisa de prefixo.

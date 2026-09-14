@@ -16,9 +16,10 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 
   images: {
-    // O otimizador de imagens do Next precisa de servidor; na exportação
-    // as imagens vão como estão.
-    unoptimized: true,
+    // Sem servidor não há otimizador. O loader próprio existe para
+    // aplicar o basePath, que o next/image não aplica sozinho.
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com" }],
   },
 };
