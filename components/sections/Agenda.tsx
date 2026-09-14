@@ -52,6 +52,7 @@ export default function Agenda() {
                   href={event.url ?? whatsappLink(`Olá! Quero detalhes do show em ${event.city}.`)}
                   target={event.url ? undefined : "_blank"}
                   rel="noreferrer noopener"
+                  data-cursor="VER"
                   className="group flex flex-wrap items-center gap-x-8 gap-y-3 px-1 py-7 transition hover:bg-white/[0.03]"
                 >
                   <time

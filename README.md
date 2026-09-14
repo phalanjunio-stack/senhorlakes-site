@@ -96,3 +96,48 @@ Ou `npm run build` e suba a pasta gerada em qualquer hospedagem de sites estáti
   próximos shows direto no resultado de busca.
 - **Acessibilidade**: navegação por teclado no player e no lightbox, foco visível,
   `prefers-reduced-motion` respeitado, e todo texto em contraste alto.
+
+## Camada de interação
+
+O site tem movimento e som, e as duas coisas têm botão de ligar/desligar no
+canto inferior direito. A preferência fica salva no navegador de quem visita.
+
+| Efeito | Onde mora | O que faz |
+| --- | --- | --- |
+| Parallax do topo | `components/fx/useParallax.ts` | Publica `--mx` / `--my` (-1 a 1). A foto anda ao contrário do mouse, o letreiro de fundo anda junto e o texto quase não se mexe — é a diferença de velocidade que cria a profundidade. |
+| Cursor próprio | `components/fx/CustomCursor.tsx` | Anel que segue o ponteiro com inércia e cresce mostrando um rótulo. O rótulo vem do atributo `data-cursor` do elemento. |
+| Inclinação 3D | `components/fx/Tilt.tsx` | Cartões de álbum, integrantes e fotos inclinam seguindo o ponteiro e ganham um reflexo no ponto onde ele está. |
+| Glow de faíscas | `components/fx/Glow.tsx` | Aura, halo e quatro faíscas orbitando nos botões, mais um anel que sai no clique. Portado do painel da Contourline. |
+| Efeitos sonoros | `lib/sound.ts` | Nove sons sintetizados na hora pela Web Audio API — zero arquivo de áudio para baixar. |
+
+### Como usar em algo novo
+
+```tsx
+// Cursor com rótulo
+<button data-cursor="PLAY">…</button>
+
+// Glow + anel de clique
+const { ripple, burst } = useRipple();
+<button className="smoke-glow relative" onClick={burst}>
+  <Glow ripple={ripple} />
+  …
+</button>
+
+// Som
+const { play } = useFx();
+play("success"); // hover, click, open, close, success, navigate, favorite, magic, drop
+```
+
+Pintar o glow com outra cor: `style={{ "--glow-rgb": "201 139 107" }}` (ou
+`hexToRgbTriplet("#c98b6b")`, de `lib/color.ts`). É assim que cada álbum
+acende com a própria cor.
+
+O CSS desses efeitos fica em `app/globals.css`, dentro de `@layer components`
+para que os utilitários do Tailwind continuem vencendo na cascata.
+
+### Acessibilidade
+
+Quem tem "reduzir movimento" ligado no sistema abre o site com tudo parado —
+mas se clicar no botão de movimento, a escolha explícita vence. O som nunca
+toca antes do primeiro clique, porque o navegador não permite, e pode ser
+desligado de vez.

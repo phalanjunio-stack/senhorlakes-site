@@ -45,13 +45,15 @@ html {
   scrollbar-color: var(--color-accent-deep) var(--color-ink);
 }
 
+/* Respeita "reduzir movimento" do sistema — mas se a pessoa ligar o
+   botão de movimento no site, a escolha explícita dela vence. */
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:not(.motion-on) {
     scroll-behavior: auto;
   }
-  *,
-  *::before,
-  *::after {
+  html:not(.motion-on) *,
+  html:not(.motion-on) *::before,
+  html:not(.motion-on) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -146,7 +148,7 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  html:not(.motion-on) .reveal {
     opacity: 1;
     transform: none;
   }
@@ -249,4 +251,249 @@ a {
 .eq-bar {
   transform-origin: bottom;
   animation: eq 900ms ease-in-out infinite;
+}
+
+/* As regras abaixo vivem na camada "components" para que os utilitários
+   do Tailwind (absolute, transition, rounded…) continuem vencendo. */
+@layer components {
+/* ──────────────────────────────────────────────────────────
+   CAMADA DE INTERAÇÃO
+   Glow das faíscas e cursor próprio, portados do painel da
+   Contourline e do site original do Senhor Lakes.
+   ────────────────────────────────────────────────────────── */
+
+/* Quando o movimento está desligado, nada aqui anima. */
+.motion-on .tilt {
+  transition: transform 420ms var(--ease-out-expo);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── Smoke glow ─────────────────────────────────────────── */
+
+.smoke-glow {
+  --glow-rgb: 159 195 189;
+  --glow-spark: #d8efeb;
+  position: relative;
+  overflow: visible;
+  transition:
+    color 240ms ease,
+    background 240ms ease,
+    border-color 240ms ease,
+    box-shadow 280ms ease,
+    transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sg-aura,
+.sg-halo,
+.sg-spark,
+.sg-ripple {
+  pointer-events: none;
+}
+
+.sg-aura {
+  position: absolute;
+  inset: -14px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(var(--glow-rgb) / 0.55) 0%,
+    rgb(var(--glow-rgb) / 0.22) 25%,
+    rgb(var(--glow-rgb) / 0.08) 50%,
+    transparent 75%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.sg-halo {
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle,
+    transparent 58%,
+    rgb(var(--glow-rgb) / 0.55) 65%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.sg-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--glow-spark) 0%,
+    rgb(var(--glow-rgb) / 0.85) 45%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 8px var(--glow-spark),
+    0 0 14px rgb(var(--glow-rgb) / 0.6);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 250ms ease;
+}
+
+.motion-on .smoke-glow:hover .sg-aura,
+.motion-on .smoke-glow:focus-visible .sg-aura {
+  opacity: 1;
+  animation: sg-aura-pulse 2.6s ease-in-out infinite;
+}
+
+.motion-on .smoke-glow:hover .sg-halo,
+.motion-on .smoke-glow:focus-visible .sg-halo {
+  opacity: 1;
+  animation: sg-halo-spin 4.5s linear infinite;
+}
+
+.motion-on .smoke-glow:hover .sg-spark,
+.motion-on .smoke-glow:focus-visible .sg-spark {
+  opacity: 1;
+  animation: sg-spark-orbit var(--d, 2s) ease-in-out var(--del, 0s) infinite;
+}
+
+@keyframes sg-aura-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.65;
+  }
+}
+
+@keyframes sg-halo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sg-spark-orbit {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--ang)) translateY(-12px)
+      rotate(calc(var(--ang) * -1)) scale(0.4);
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(calc(var(--ang) + 100deg)) translateY(-26px)
+      rotate(calc((var(--ang) + 100deg) * -1)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(calc(var(--ang) + 200deg)) translateY(-34px)
+      rotate(calc((var(--ang) + 200deg) * -1)) scale(0.2);
+  }
+}
+
+/* anel que sai do botão no clique */
+.sg-ripple {
+  position: absolute;
+  inset: -2px;
+  z-index: 5;
+  border: 1.5px solid rgb(var(--glow-rgb) / 0.85);
+  border-radius: inherit;
+  animation: sg-ripple-out 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes sg-ripple-out {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* ── Cursor próprio ─────────────────────────────────────── */
+
+.motion-on:has(.cursor-ring) body {
+  cursor: none;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgb(var(--glow-rgb, 159 195 189) / 0.75);
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transition:
+    width 260ms var(--ease-out-expo),
+    height 260ms var(--ease-out-expo),
+    background 260ms ease,
+    opacity 200ms ease,
+    border-color 260ms ease;
+}
+
+.cursor-ring.is-visible {
+  opacity: 1;
+}
+
+.cursor-ring.is-active {
+  width: 50px;
+  height: 50px;
+  background: rgb(var(--glow-rgb, 159 195 189) / 0.14);
+  border-color: rgb(var(--glow-rgb, 159 195 189) / 1);
+  mix-blend-mode: normal;
+}
+
+.cursor-ring.is-down {
+  transform-origin: center;
+  background: rgb(var(--glow-rgb, 159 195 189) / 0.3);
+}
+
+.cursor-label {
+  font-family: var(--font-display);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor-ring.is-active .cursor-label {
+  opacity: 1;
+}
+
+/* Em toque, ou com movimento desligado, o cursor do sistema volta. */
+@media (pointer: coarse) {
+  .cursor-ring {
+    display: none;
+  }
+  body {
+    cursor: auto;
+  }
+}
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useFx } from "@/components/fx/FxProvider";
 import { band } from "@/lib/data";
 
 const links = [
@@ -21,6 +22,7 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { play } = useFx();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -56,6 +58,8 @@ export default function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
+              data-cursor="IR"
+              onClick={() => play("navigate")}
               className="font-display text-xs font-semibold tracking-[0.22em] text-muted uppercase transition hover:text-paper"
             >
               {link.label}
@@ -71,7 +75,11 @@ export default function SiteHeader() {
 
         <button
           type="button"
-          onClick={() => setOpen((value) => !value)}
+          data-cursor="MENU"
+          onClick={() => {
+            play(open ? "close" : "open");
+            setOpen((value) => !value);
+          }}
           className="grid size-10 place-items-center text-paper lg:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
@@ -91,6 +99,7 @@ export default function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={() => play("navigate")}
               className="font-display border-b border-[var(--line)] py-4 text-2xl font-extrabold tracking-tight text-paper uppercase"
             >
               {link.label}

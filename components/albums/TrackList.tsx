@@ -2,11 +2,13 @@
 
 import { Pause, Play } from "lucide-react";
 import { EqualizerIcon } from "@/components/player/PlayerBar";
+import { useFx } from "@/components/fx/FxProvider";
 import { usePlayer } from "@/components/player/PlayerProvider";
 import { albumTracks, formatTime, type Album } from "@/lib/data";
 
 export default function TrackList({ album }: { album: Album }) {
   const { playAlbum, toggle, current, isPlaying, source } = usePlayer();
+  const { play } = useFx();
   const tracks = albumTracks(album);
   const fromThisAlbum = source?.href === `/albuns/${album.slug}`;
 
@@ -20,7 +22,16 @@ export default function TrackList({ album }: { album: Album }) {
           <li key={track.slug}>
             <button
               type="button"
-              onClick={() => (isCurrent ? toggle() : playAlbum(album, tracks, i))}
+              data-cursor={playingThis ? "PAUSAR" : "PLAY"}
+              onClick={() => {
+                if (isCurrent) {
+                  play(isPlaying ? "drop" : "click");
+                  toggle();
+                } else {
+                  play("click");
+                  playAlbum(album, tracks, i);
+                }
+              }}
               className="group flex w-full items-center gap-4 rounded-lg px-3 py-3 text-left transition hover:bg-white/[0.06]"
               aria-label={playingThis ? `Pausar ${track.title}` : `Tocar ${track.title}`}
             >

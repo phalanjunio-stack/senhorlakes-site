@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ImagePlus } from "lucide-react";
 import Lightbox from "./Lightbox";
+import Tilt from "@/components/fx/Tilt";
+import { useFx } from "@/components/fx/FxProvider";
 import { photos as allPhotos, type Photo } from "@/lib/data";
 
 const FILTERS = [
@@ -18,13 +20,15 @@ function Tile({ photo, index, onOpen }: { photo: Photo; index: number; onOpen: (
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <button
-      type="button"
-      onClick={onOpen}
-      className="group relative block w-full overflow-hidden rounded-xl bg-graphite text-left"
-      style={{ aspectRatio: photo.ratio }}
-      aria-label={photo.caption ? `Abrir foto: ${photo.caption}` : "Abrir foto"}
-    >
+    <Tilt strength={0.7}>
+      <button
+        type="button"
+        onClick={onOpen}
+        data-cursor="VER"
+        className="group relative block w-full overflow-hidden rounded-xl bg-graphite text-left"
+        style={{ aspectRatio: photo.ratio }}
+        aria-label={photo.caption ? `Abrir foto: ${photo.caption}` : "Abrir foto"}
+      >
       {photo.src ? (
         <Image
           src={photo.src}
@@ -57,13 +61,25 @@ function Tile({ photo, index, onOpen }: { photo: Photo; index: number; onOpen: (
           </span>
         </span>
       )}
-    </button>
+
+        {/* reflexo que segue o ponteiro dentro do cartão */}
+        <span
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(16rem 16rem at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(255,255,255,0.12), transparent 62%)",
+          }}
+        />
+      </button>
+    </Tilt>
   );
 }
 
 export default function Masonry({ limit }: { limit?: number }) {
   const [filter, setFilter] = useState<string>("todos");
   const [openAt, setOpenAt] = useState<number | null>(null);
+  const { play } = useFx();
 
   const visible = useMemo(() => {
     const list = filter === "todos" ? allPhotos : allPhotos.filter((p) => p.category === filter);
@@ -79,7 +95,11 @@ export default function Masonry({ limit }: { limit?: number }) {
             <button
               key={item.key}
               type="button"
-              onClick={() => setFilter(item.key)}
+              data-cursor="FILTRAR"
+              onClick={() => {
+                play("click");
+                setFilter(item.key);
+              }}
               aria-pressed={active}
               className={`rounded-full border px-4 py-2 font-display text-[0.7rem] font-semibold tracking-[0.16em] uppercase transition ${
                 active
@@ -100,7 +120,15 @@ export default function Masonry({ limit }: { limit?: number }) {
       ) : (
         <div className="masonry columns-2 lg:columns-3 xl:columns-4">
           {visible.map((photo, i) => (
-            <Tile key={photo.id} photo={photo} index={i} onOpen={() => setOpenAt(i)} />
+            <Tile
+              key={photo.id}
+              photo={photo}
+              index={i}
+              onOpen={() => {
+                play("open");
+                setOpenAt(i);
+              }}
+            />
           ))}
         </div>
       )}
@@ -109,7 +137,10 @@ export default function Masonry({ limit }: { limit?: number }) {
         <Lightbox
           photos={visible}
           index={openAt}
-          onClose={() => setOpenAt(null)}
+          onClose={() => {
+            play("close");
+            setOpenAt(null);
+          }}
           onIndexChange={setOpenAt}
         />
       )}

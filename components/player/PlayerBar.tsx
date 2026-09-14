@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { albums, formatTime } from "@/lib/data";
 import AlbumArt from "@/components/AlbumArt";
+import Glow, { useRipple } from "@/components/fx/Glow";
+import { useFx } from "@/components/fx/FxProvider";
 import { usePlayer } from "./PlayerProvider";
 
 function Scrubber({ compact = false }: { compact?: boolean }) {
@@ -54,13 +56,19 @@ function Scrubber({ compact = false }: { compact?: boolean }) {
 
 function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
   const { isPlaying, isLoading, toggle, next, previous, index, queue } = usePlayer();
+  const { play } = useFx();
+  const { ripple, burst } = useRipple();
   const big = size === "lg";
 
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={previous}
+        data-cursor="ANTERIOR"
+        onClick={() => {
+          play("click");
+          previous();
+        }}
         disabled={queue.length < 2 && index === 0}
         className="grid size-9 place-items-center rounded-full text-muted transition hover:text-paper disabled:opacity-30"
         aria-label="Faixa anterior"
@@ -70,12 +78,18 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
 
       <button
         type="button"
-        onClick={toggle}
-        className={`grid place-items-center rounded-full bg-paper text-ink transition hover:scale-105 active:scale-95 ${
+        data-cursor={isPlaying ? "PAUSAR" : "PLAY"}
+        onClick={() => {
+          burst();
+          play(isPlaying ? "drop" : "click");
+          toggle();
+        }}
+        className={`smoke-glow grid place-items-center rounded-full bg-paper text-ink transition hover:scale-105 active:scale-95 ${
           big ? "size-16" : "size-10"
         }`}
         aria-label={isPlaying ? "Pausar" : "Reproduzir"}
       >
+        <Glow ripple={ripple} />
         {isLoading && !isPlaying ? (
           <span
             className="block size-4 animate-spin rounded-full border-2 border-ink/25 border-t-ink"
@@ -90,7 +104,11 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
 
       <button
         type="button"
-        onClick={next}
+        data-cursor="PRÓXIMA"
+        onClick={() => {
+          play("click");
+          next();
+        }}
         disabled={index >= queue.length - 1}
         className="grid size-9 place-items-center rounded-full text-muted transition hover:text-paper disabled:opacity-30"
         aria-label="Próxima faixa"
@@ -167,6 +185,7 @@ function VolumeControl() {
 /** Tela cheia "Tocando agora", com a fila ao lado. */
 function NowPlayingSheet() {
   const { current, source, queue, index, jumpTo, setExpanded, isPlaying } = usePlayer();
+  const { play } = useFx();
 
   const album = useMemo(
     () => albums.find((a) => `/albuns/${a.slug}` === source?.href) ?? albums[0],
@@ -192,7 +211,11 @@ function NowPlayingSheet() {
       <header className="relative flex items-center justify-between px-5 py-4 lg:px-10">
         <button
           type="button"
-          onClick={() => setExpanded(false)}
+          data-cursor="FECHAR"
+          onClick={() => {
+            play("close");
+            setExpanded(false);
+          }}
           className="flex items-center gap-2 text-sm text-muted transition hover:text-paper"
         >
           <ChevronDown size={20} /> Fechar
@@ -238,7 +261,11 @@ function NowPlayingSheet() {
                 <li key={`${track.slug}-${i}`}>
                   <button
                     type="button"
-                    onClick={() => jumpTo(i)}
+                    data-cursor="PLAY"
+                    onClick={() => {
+                      play("click");
+                      jumpTo(i);
+                    }}
                     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition ${
                       isCurrent ? "bg-white/10" : "hover:bg-white/5"
                     }`}
@@ -285,6 +312,7 @@ export function EqualizerIcon() {
 
 export default function PlayerBar() {
   const { current, source, expanded, setExpanded, time, duration } = usePlayer();
+  const { play } = useFx();
 
   const album = useMemo(
     () => albums.find((a) => `/albuns/${a.slug}` === source?.href) ?? albums[0],
@@ -310,7 +338,11 @@ export default function PlayerBar() {
           {/* faixa atual */}
           <button
             type="button"
-            onClick={() => setExpanded(true)}
+            data-cursor="ABRIR"
+            onClick={() => {
+              play("magic");
+              setExpanded(true);
+            }}
             className="flex min-w-0 flex-1 items-center gap-3 text-left lg:flex-none lg:w-[26%]"
             aria-label="Abrir tela Tocando agora"
           >
@@ -342,7 +374,11 @@ export default function PlayerBar() {
             <VolumeControl />
             <button
               type="button"
-              onClick={() => setExpanded(true)}
+              data-cursor="FILA"
+              onClick={() => {
+                play("magic");
+                setExpanded(true);
+              }}
               className="grid size-8 place-items-center text-muted transition hover:text-paper"
               aria-label="Abrir tela Tocando agora"
               title="Tocando agora"

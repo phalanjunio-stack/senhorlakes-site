@@ -1,5 +1,6 @@
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
+import Tilt from "@/components/fx/Tilt";
 import { members } from "@/lib/data";
 
 export default function Banda() {
@@ -21,7 +22,11 @@ export default function Banda() {
       <ul className="grid grid-cols-2 gap-3 lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] lg:gap-4">
         {members.map((member, i) => (
           <Reveal as="li" key={member.name} delay={i * 90}>
-            <article className="group relative aspect-[3/4] overflow-hidden rounded-xl">
+            <Tilt>
+            <article
+              className="group relative aspect-[3/4] overflow-hidden rounded-xl"
+              data-cursor={member.name.toUpperCase()}
+            >
               <div
                 className="absolute inset-[-3%] bg-no-repeat grayscale brightness-[0.72] contrast-[1.16] transition duration-700 group-hover:scale-[1.06] group-hover:grayscale-0 group-hover:brightness-90"
                 style={{
@@ -39,7 +44,17 @@ export default function Banda() {
                 </h3>
                 <p className="text-xs text-muted">{member.role}</p>
               </div>
+              {/* luz que acompanha o ponteiro */}
+              <span
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                aria-hidden
+                style={{
+                  background:
+                    "radial-gradient(14rem 14rem at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(159,195,189,0.18), transparent 62%)",
+                }}
+              />
             </article>
+            </Tilt>
           </Reveal>
         ))}
       </ul>
