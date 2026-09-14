@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import type { Album, Track } from "@/lib/data";
+import { asset } from "@/lib/site";
 
 type RepeatMode = "off" | "all" | "one";
 
@@ -109,8 +110,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const load = useCallback((track: Track | null, shouldPlay: boolean) => {
     const audio = audioRef.current;
     if (!audio || !track) return;
-    if (!audio.src.endsWith(track.src)) {
-      audio.src = track.src;
+    if (!audio.src.endsWith(asset(track.src))) {
+      audio.src = asset(track.src);
       audio.load();
     }
     if (shouldPlay) {
@@ -139,7 +140,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       // Precisa acontecer no mesmo gesto do clique, senão o navegador bloqueia.
       const audio = audioRef.current;
       if (audio && track) {
-        audio.src = track.src;
+        audio.src = asset(track.src);
         audio.load();
         setIsLoading(true);
         audio.play().catch(() => setIsPlaying(false));
@@ -202,7 +203,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       const audio = audioRef.current;
       const track = queue[target];
       if (audio && track) {
-        audio.src = track.src;
+        audio.src = asset(track.src);
         audio.load();
         setIsLoading(true);
         audio.play().catch(() => setIsPlaying(false));

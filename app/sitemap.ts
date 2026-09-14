@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { albums } from "@/lib/data";
 import { siteUrl } from "@/lib/site";
 
+/* Exigido pela exportação estática. */
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [

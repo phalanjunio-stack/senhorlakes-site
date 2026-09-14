@@ -8,7 +8,7 @@ import PlayerBar from "@/components/player/PlayerBar";
 import { FxProvider } from "@/components/fx/FxProvider";
 import FxControls from "@/components/fx/FxControls";
 import { band, members } from "@/lib/data";
-import { siteUrl } from "@/lib/site";
+import { asset, siteUrl } from "@/lib/site";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     description: "Pop rock ao vivo. Ouça as gravações e veja a agenda de shows.",
     images: ["/img/capa.jpg"],
   },
-  icons: { icon: "/img/logo.png", apple: "/img/logo.png" },
+  icons: { icon: asset("/img/logo.png"), apple: asset("/img/logo.png") },
 };
 
 export const viewport: Viewport = {

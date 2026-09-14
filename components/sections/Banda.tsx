@@ -2,6 +2,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import Tilt from "@/components/fx/Tilt";
 import { members } from "@/lib/data";
+import { asset } from "@/lib/site";
 
 export default function Banda() {
   return (
@@ -31,7 +32,7 @@ export default function Banda() {
               <div
                 className="absolute inset-[-3%] bg-no-repeat grayscale brightness-[0.72] contrast-[1.16] transition duration-700 group-hover:scale-[1.06] group-hover:grayscale-0 group-hover:brightness-90"
                 style={{
-                  backgroundImage: `url(${member.photo ?? "/img/banda.jpg"})`,
+                  backgroundImage: `url(${asset(member.photo ?? "/img/banda.jpg")})`,
                   // 500% deixa cada pessoa ocupando o card inteiro; 15% na
                   // vertical alinha o recorte na altura dos rostos.
                   backgroundSize: member.photo ? "cover" : "500% auto",
