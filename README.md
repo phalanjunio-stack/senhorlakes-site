@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site do Senhor Lakes
 
-## Getting Started
+Next.js 16 + Tailwind 4. Player de álbuns no estilo YouTube Music, galeria masonry
+com lightbox, agenda, vídeos do YouTube e páginas estáticas (rápidas e indexáveis).
 
-First, run the development server:
+## Rodar
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre em http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Onde mexer
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Praticamente tudo está em [`lib/data.ts`](lib/data.ts).** Você não precisa abrir
+mais nenhum arquivo para atualizar o conteúdo do site.
 
-## Learn More
+| O que mudar | Onde |
+| --- | --- |
+| E-mail, WhatsApp, Instagram, YouTube | `band` |
+| Integrantes | `members` |
+| Músicas | `tracks` |
+| Álbuns e playlists | `albums` |
+| Shows | `events` |
+| Vídeos | `videos` |
+| Fotos da galeria | `photos` |
 
-To learn more about Next.js, take a look at the following resources:
+### Adicionar uma música
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Coloque o arquivo em `public/audio/`.
+2. Acrescente uma linha em `tracks` com `slug`, `title`, `duration` (em segundos)
+   e `src`.
+3. Cite o `slug` em `trackSlugs` de algum álbum.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Para descobrir a duração: `ffprobe -v quiet -show_format public/audio/arquivo.mp3`.
 
-## Deploy on Vercel
+### Criar um álbum
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Copie um bloco de `albums` e troque `slug`, `title`, `kind`, `accent` e a lista
+`trackSlugs`. A mesma música pode aparecer em vários álbuns — é assim que as
+playlists funcionam.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Enquanto `artwork` for `null`, a capa é desenhada automaticamente a partir da cor
+`accent`. Para usar a arte real, salve a imagem quadrada em `public/img/` e
+aponte: `artwork: "/img/capa-do-album.jpg"`.
+
+### Adicionar um vídeo
+
+Abra o vídeo no YouTube e copie o trecho depois de `watch?v=`:
+
+```ts
+export const videos: Video[] = [
+  { youtubeId: "dQw4w9WgXcQ", title: "Ao vivo no Santa Fé" },
+];
+```
+
+O player do YouTube só carrega depois que a pessoa clica na miniatura — isso
+mantém a página leve e sem rastreadores para quem não assiste.
+
+### Adicionar fotos
+
+1. Salve em `public/img/`.
+2. Acrescente uma entrada em `photos` com `src`, `alt`, `category`, `caption` e
+   `ratio` (largura ÷ altura da foto — `3/2` para paisagem, `2/3` para retrato).
+
+O `ratio` é o que dá o efeito masonry: cada foto ocupa a altura proporcional à
+sua forma real. As entradas com `src: null` são espaços reservados, só para você
+enxergar o layout — apague conforme for subindo as fotos de verdade.
+
+## Antes de publicar
+
+- [ ] Trocar o domínio em [`lib/site.ts`](lib/site.ts).
+- [ ] Conferir e-mail, telefone e links de Instagram/YouTube em `band`.
+- [ ] Substituir os espaços reservados da galeria por fotos reais.
+- [ ] Trocar as capas geradas pela arte definitiva, se houver.
+
+## Publicar
+
+O site é 100% estático (nenhuma página precisa de servidor). Na Vercel:
+
+```bash
+npx vercel
+```
+
+Ou `npm run build` e suba a pasta gerada em qualquer hospedagem de sites estáticos.
+
+## Detalhes técnicos
+
+- **Player global**: fica em `components/player/`. O `PlayerProvider` guarda um
+  único elemento `<audio>` no layout, então a música não para quando você troca
+  de página. Suporta fila, aleatório, repetição, atalho de espaço, e os controles
+  de mídia do sistema (tela de bloqueio e botões do fone).
+- **SEO**: Open Graph, Twitter Card, `sitemap.xml`, `robots.txt` e JSON-LD de
+  `MusicGroup`, `MusicAlbum` e `MusicEvent` — esse último faz o Google mostrar os
+  próximos shows direto no resultado de busca.
+- **Acessibilidade**: navegação por teclado no player e no lightbox, foco visível,
+  `prefers-reduced-motion` respeitado, e todo texto em contraste alto.
