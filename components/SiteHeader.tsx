@@ -60,14 +60,14 @@ export default function SiteHeader() {
               href={link.href}
              
               onClick={() => play("open")}
-              className="font-display text-xs font-semibold tracking-[0.22em] text-muted uppercase transition hover:text-paper"
+              className="font-display text-xs font-semibold tracking-[0.22em] text-paper/85 uppercase transition hover:text-accent"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <p className="hidden text-right font-display text-[0.68rem] leading-tight tracking-[0.18em] text-muted uppercase xl:block">
+        <p className="font-display hidden text-right text-[0.68rem] leading-tight tracking-[0.18em] text-paper/70 uppercase xl:block">
           Mais que música.
           <br />
           <strong className="text-paper">Boas histórias.</strong>
