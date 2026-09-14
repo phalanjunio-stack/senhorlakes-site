@@ -94,7 +94,7 @@ export default function Hero() {
                 aria-hidden
                 style={{
                   background:
-                    "linear-gradient(to top, rgba(8,8,8,0.5), transparent 30%), linear-gradient(to right, rgba(8,8,8,0.3), transparent 20%)",
+                    "linear-gradient(to top, rgba(22,24,27,0.55), transparent 30%), linear-gradient(to right, rgba(22,24,27,0.3), transparent 20%)",
                 }}
               />
             </div>

@@ -10,9 +10,11 @@
    sálvia #9cc0b4 (a palavra LAKES) · dourado #a88418 (os trastes e a
    borda) · creme #fcfcfc · oliva #48483c (o campo do escudo). */
 @theme {
-  --color-ink: #080808;
-  --color-graphite: #111111;
-  --color-carbon: #161817;
+  /* Grafite em vez de preto absoluto: o #080808 anterior deixava a
+     página dura e chapada. Este tom ainda é escuro, mas tem luz. */
+  --color-ink: #16181b;
+  --color-graphite: #1e2125;
+  --color-carbon: #23262a;
   --color-paper: #f4f3eb;
   --color-muted: #aeb8b3;
 
@@ -158,9 +160,9 @@ a {
    "SEN" encosta na cara do primeiro integrante. Se precisar de mais
    presença, use peso ou espaçamento, não tamanho. */
 .hero-title {
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
-  line-height: 0.78;
-  letter-spacing: -0.065em;
+  font-size: clamp(2.1rem, 4.8vw, 3.9rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
 }
 
 /* Aparição no scroll */
