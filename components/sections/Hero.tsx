@@ -48,13 +48,15 @@ export default function Hero() {
             "translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -16px), 0) scale(1.03)",
         }}
       >
+        {/* Arte de capa da banda. Sem filtros: ela já vem tratada, com
+            o próprio azul e dourado — dessaturar aqui só estragaria. */}
         <Image
-          src="/img/banda.jpg"
+          src="/img/capa.jpg"
           alt="Os integrantes do Senhor Lakes"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_26%] brightness-[0.92] contrast-[1.05] saturate-[0.92]"
+          className="object-cover object-[center_38%]"
         />
       </div>
 
@@ -66,23 +68,23 @@ export default function Hero() {
         aria-hidden
         style={{
           background:
-            "linear-gradient(to top, #16181b 0%, rgba(22,24,27,0.95) 24%, rgba(22,24,27,0.74) 42%, transparent 64%)",
+            "linear-gradient(to top, #16181b 0%, rgba(22,24,27,0.9) 20%, rgba(22,24,27,0.52) 38%, transparent 60%)",
         }}
       />
 
-      {/* Véu curto no topo: o fundo do estúdio é claro e o menu sumia em
-          cima dele. Acaba em 14%, antes dos rostos. */}
+      {/* Véu curto no topo, para o menu nunca depender do que estiver
+          atrás dele. Acaba antes dos rostos. */}
       <div
         className="absolute inset-x-0 top-0 h-40"
         aria-hidden
         style={{
-          background: "linear-gradient(to bottom, rgba(22,24,27,0.78), transparent 100%)",
+          background: "linear-gradient(to bottom, rgba(22,24,27,0.62), transparent 100%)",
         }}
       />
 
       {/* facho de luz que segue o mouse */}
       <div
-        className="absolute inset-0 opacity-60 mix-blend-screen"
+        className="absolute inset-0 opacity-30 mix-blend-screen"
         aria-hidden
         style={{
           background:
