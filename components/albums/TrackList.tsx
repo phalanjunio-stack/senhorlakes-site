@@ -25,10 +25,10 @@ export default function TrackList({ album }: { album: Album }) {
               data-cursor={playingThis ? "PAUSAR" : "PLAY"}
               onClick={() => {
                 if (isCurrent) {
-                  play(isPlaying ? "drop" : "click");
+                  play(isPlaying ? "close" : "open");
                   toggle();
                 } else {
-                  play("click");
+                  play("open");
                   playAlbum(album, tracks, i);
                 }
               }}

@@ -59,7 +59,7 @@ export default function SiteHeader() {
               key={link.href}
               href={link.href}
               data-cursor="IR"
-              onClick={() => play("navigate")}
+              onClick={() => play("open")}
               className="font-display text-xs font-semibold tracking-[0.22em] text-muted uppercase transition hover:text-paper"
             >
               {link.label}
@@ -99,7 +99,7 @@ export default function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => play("navigate")}
+              onClick={() => play("open")}
               className="font-display border-b border-[var(--line)] py-4 text-2xl font-extrabold tracking-tight text-paper uppercase"
             >
               {link.label}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp, Sparkles, Volume2, VolumeX } from "lucide-react";
+import Glow, { useRipple } from "./Glow";
 import { useFx } from "./FxProvider";
 
 /** Fio de progresso da leitura, colado no topo da janela. */
@@ -25,8 +26,11 @@ function ScrollProgress() {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[2px]" aria-hidden>
       <div
-        className="h-full origin-left bg-accent"
-        style={{ transform: `scaleX(${progress})` }}
+        className="h-full origin-left"
+        style={{
+          background: "linear-gradient(to right, var(--color-gold), var(--color-accent))",
+          transform: `scaleX(${progress})`,
+        }}
       />
     </div>
   );
@@ -39,6 +43,9 @@ function ScrollProgress() {
 export default function FxControls() {
   const { motion, sound, toggleMotion, toggleSound, play } = useFx();
   const [showTop, setShowTop] = useState(false);
+  const top = useRipple();
+  const snd = useRipple();
+  const mov = useRipple();
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 700);
@@ -48,7 +55,7 @@ export default function FxControls() {
   }, []);
 
   const button =
-    "smoke-glow relative grid size-10 place-items-center rounded-full border border-[var(--line)] bg-carbon/85 backdrop-blur transition hover:border-accent";
+    "smoke-glow glow-fill relative grid size-10 place-items-center rounded-full border border-[var(--line)] bg-carbon/85 backdrop-blur transition hover:text-ink";
 
   return (
     <>
@@ -59,33 +66,40 @@ export default function FxControls() {
           <button
             type="button"
             onClick={() => {
-              play("navigate");
+              top.burst();
+              play("open");
               window.scrollTo({ top: 0, behavior: motion ? "smooth" : "auto" });
             }}
-            className={`${button} text-muted hover:text-accent`}
+            className={` text-muted`}
             aria-label="Voltar ao topo"
             data-cursor="TOPO"
           >
+            <Glow ripple={top.ripple} />
             <ArrowUp size={17} />
           </button>
         )}
 
         <button
           type="button"
-          onClick={toggleSound}
+          onClick={() => {
+            snd.burst();
+            toggleSound();
+          }}
           className={`${button} ${sound ? "text-accent" : "text-muted"}`}
           aria-pressed={sound}
           aria-label={sound ? "Desligar efeitos sonoros" : "Ligar efeitos sonoros"}
           title={sound ? "Som: ligado" : "Som: desligado"}
           data-cursor={sound ? "MUDO" : "SOM"}
         >
+          <Glow ripple={snd.ripple} />
           {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
         </button>
 
         <button
           type="button"
           onClick={() => {
-            play("click");
+            mov.burst();
+            play(motion ? "close" : "open");
             toggleMotion();
           }}
           className={`${button} ${motion ? "text-accent" : "text-muted"}`}
@@ -94,6 +108,7 @@ export default function FxControls() {
           title={motion ? "Movimento: ligado" : "Movimento: desligado"}
           data-cursor="MOV"
         >
+          <Glow ripple={mov.ripple} />
           <Sparkles size={17} />
         </button>
       </div>

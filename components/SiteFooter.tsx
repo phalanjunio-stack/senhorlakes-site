@@ -14,7 +14,7 @@ export default function SiteFooter() {
             <h2 className="font-display mt-4 text-[clamp(2.6rem,7vw,5rem)] leading-[0.86] font-extrabold tracking-[-0.05em] uppercase">
               Vamos tocar{" "}
               <br />
-              <span className="text-accent">juntos?</span>
+              <span className="text-gold">juntos?</span>
             </h2>
             <p className="mt-5 max-w-md text-muted">
               Casas de show, festas, eventos corporativos e casamentos em {band.city} e região.

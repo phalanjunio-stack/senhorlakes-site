@@ -116,19 +116,41 @@ function click() {
   note("sine", 440, t + 0.002, 0.16, 0.09, 0.008);
 }
 
-/** Subida suave — abrir painel, lightbox, menu. */
+/* open e close são o par principal do site: tudo que abre, começa ou
+   retoma usa open; tudo que fecha, pausa ou recolhe usa close. */
+
+/** Subida suave 300→600 Hz. */
 function open() {
   const t = now();
   if (t == null) return;
-  note("sine", 300, t, 0.18, 0.24, 0.04, 600);
+  note("sine", 300, t, 0.18, 0.26, 0.04, 600);
 }
 
-/** Descida — espelho do open. */
+/** Descida — espelho exato do open. */
 function close() {
   const t = now();
   if (t == null) return;
-  note("sine", 600, t, 0.2, 0.24, 0.012, 300);
+  note("sine", 600, t, 0.2, 0.26, 0.012, 300);
   note("sine", 1200, t + 0.02, 0.1, 0.04, 0.006);
+}
+
+/** Dois pings ascendentes. */
+function chatOpen() {
+  const t = now();
+  if (t == null) return;
+  note("sine", 880, t, 0.18, 0.16, 0.008);
+  note("sine", 1320, t + 0.06, 0.16, 0.14, 0.008);
+  note("sine", 2200, t + 0.1, 0.1, 0.04, 0.006);
+}
+
+/** Sino com quinta justa. */
+function notification() {
+  const t = now();
+  if (t == null) return;
+  note("sine", 988, t, 0.36, 0.18, 0.008);
+  note("sine", 1480, t + 0.02, 0.32, 0.15, 0.008);
+  note("sine", 2960, t + 0.04, 0.2, 0.05, 0.005);
+  note("sine", 494, t + 0.01, 0.4, 0.08, 0.012);
 }
 
 /** Tríade Dó-Mi-Sol com brilho no topo — começar a tocar um álbum. */
@@ -186,6 +208,8 @@ export const SoundFX = {
   click,
   open,
   close,
+  chatOpen,
+  notification,
   success,
   navigate,
   favorite,

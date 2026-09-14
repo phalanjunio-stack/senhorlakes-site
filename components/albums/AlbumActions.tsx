@@ -25,10 +25,10 @@ export default function AlbumActions({ album }: { album: Album }) {
         onClick={() => {
           main.burst();
           if (isCurrent) {
-            play(isPlaying ? "drop" : "click");
+            play(isPlaying ? "close" : "open");
             toggle();
           } else {
-            play("success");
+            play("open");
             playAlbum(album, tracks);
           }
         }}
@@ -52,7 +52,7 @@ export default function AlbumActions({ album }: { album: Album }) {
         data-cursor="MISTURAR"
         onClick={() => {
           random.burst();
-          play("magic");
+          play("chatOpen");
           if (!shuffle) toggleShuffle();
           playAlbum(album, tracks, Math.floor(Math.random() * tracks.length));
         }}

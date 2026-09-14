@@ -66,6 +66,7 @@ export default function Videos() {
     <section id="videos" className="page-width scroll-mt-24 py-24" aria-labelledby="videos-title">
       <SectionHeading
         id="videos-title"
+        tone="gold"
         index="04 / Vídeos"
         title="No palco"
         aside="Registros ao vivo, clipes e bastidores."

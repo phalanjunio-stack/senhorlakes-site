@@ -17,6 +17,7 @@ export default function Agenda() {
     <section id="agenda" className="page-width scroll-mt-24 py-24" aria-labelledby="agenda-title">
       <SectionHeading
         id="agenda-title"
+        tone="gold"
         index="02 / Próximos shows"
         title="Agenda"
         aside={
@@ -59,7 +60,7 @@ export default function Agenda() {
                     dateTime={event.date}
                     className="font-display flex shrink-0 items-baseline gap-2 border-r border-[var(--line)] pr-8"
                   >
-                    <strong className="text-4xl font-extrabold tracking-tight">{day}</strong>
+                    <strong className="text-4xl font-extrabold tracking-tight text-gold">{day}</strong>
                     <span className="text-sm tracking-[0.2em] text-muted uppercase">
                       {month} {year}
                     </span>

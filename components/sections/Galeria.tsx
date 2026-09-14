@@ -12,7 +12,7 @@ export default function Galeria() {
         index="05 / Registros"
         title={
           <>
-            Mídia <em className="font-normal text-accent not-italic">/</em> Galeria
+            Mídia <em className="font-normal text-gold not-italic">/</em> Galeria
           </>
         }
         aside={

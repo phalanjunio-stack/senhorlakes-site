@@ -15,6 +15,7 @@ export default function AlbunsPage() {
   return (
     <main className="page-width pt-32 pb-24">
       <SectionHeading
+        tone="gold"
         index="Biblioteca"
         title="Álbuns"
         aside="Clique numa capa para abrir a lista de faixas. O player continua tocando enquanto você navega pelo site."

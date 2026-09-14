@@ -81,7 +81,7 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
         data-cursor={isPlaying ? "PAUSAR" : "PLAY"}
         onClick={() => {
           burst();
-          play(isPlaying ? "drop" : "click");
+          play(isPlaying ? "close" : "open");
           toggle();
         }}
         className={`smoke-glow grid place-items-center rounded-full bg-paper text-ink transition hover:scale-105 active:scale-95 ${
@@ -340,7 +340,7 @@ export default function PlayerBar() {
             type="button"
             data-cursor="ABRIR"
             onClick={() => {
-              play("magic");
+              play("chatOpen");
               setExpanded(true);
             }}
             className="flex min-w-0 flex-1 items-center gap-3 text-left lg:flex-none lg:w-[26%]"
@@ -376,7 +376,7 @@ export default function PlayerBar() {
               type="button"
               data-cursor="FILA"
               onClick={() => {
-                play("magic");
+                play("chatOpen");
                 setExpanded(true);
               }}
               className="grid size-8 place-items-center text-muted transition hover:text-paper"

@@ -6,14 +6,27 @@
    papel quente e um verde-água dessaturado como acento.
    ────────────────────────────────────────────────────────── */
 
+/* Cores tiradas da própria logo:
+   sálvia #9cc0b4 (a palavra LAKES) · dourado #a88418 (os trastes e a
+   borda) · creme #fcfcfc · oliva #48483c (o campo do escudo). */
 @theme {
   --color-ink: #080808;
   --color-graphite: #111111;
   --color-carbon: #161817;
   --color-paper: #f4f3eb;
   --color-muted: #aeb8b3;
+
+  /* sálvia — cor principal */
   --color-accent: #9fc3bd;
   --color-accent-deep: #6d8f89;
+
+  /* dourado — segunda cor da marca. O tom da logo (#a88418) é escuro
+     demais para texto pequeno no preto, então o claro é para escrever
+     e o fundo é para preencher. */
+  --color-gold: #c9a227;
+  --color-gold-deep: #a88418;
+
+  --color-olive: #48483c;
   --color-charcoal: #45443f;
 
   --font-display: var(--font-archivo), "Arial Narrow", Impact, sans-serif;
@@ -65,7 +78,8 @@ body {
   overflow-x: hidden;
   color: var(--color-paper);
   background:
-    radial-gradient(circle at 10% 8%, rgba(159, 195, 189, 0.07), transparent 28rem),
+    radial-gradient(circle at 12% 6%, rgba(159, 195, 189, 0.07), transparent 30rem),
+    radial-gradient(circle at 88% 42%, rgba(201, 162, 39, 0.05), transparent 32rem),
     var(--color-ink);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -129,7 +143,21 @@ a {
   content: "";
   width: 2rem;
   height: 1px;
-  background: var(--color-accent);
+  background: linear-gradient(to right, var(--color-gold), var(--color-accent));
+}
+
+/* Variante dourada, para alternar as seções e não ficar tudo verde. */
+.eyebrow-gold {
+  color: var(--color-gold);
+}
+
+/* Título do topo. Fica aqui, e não numa classe utilitária arbitrária,
+   porque é o elemento de assinatura do site e o tamanho é ajustado
+   com frequência. */
+.hero-title {
+  font-size: clamp(3.2rem, 9.5vw, 7.4rem);
+  line-height: 0.76;
+  letter-spacing: -0.07em;
 }
 
 /* Aparição no scroll */
@@ -289,6 +317,27 @@ a {
 .sg-spark,
 .sg-ripple {
   pointer-events: none;
+}
+
+/* Preenchimento do hover, como no kit: o botão acende inteiro, ganha
+   anel externo e cresce um pouco. Combine com .smoke-glow.
+   A cor do texto no hover vem de um utilitário (hover:text-ink), porque
+   utilitário vence camada de componente. */
+.glow-fill:hover,
+.glow-fill:focus-visible {
+  border-color: rgb(var(--glow-rgb) / 0.85);
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgb(var(--glow-rgb)) 0%,
+    rgb(var(--glow-rgb) / 0.72) 55%,
+    rgb(var(--glow-rgb) / 0.42) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 14px rgb(var(--glow-rgb) / 0.4),
+    0 0 0 3px rgb(var(--glow-rgb) / 0.18),
+    0 0 24px rgb(var(--glow-rgb) / 0.65);
+  transform: scale(1.06);
 }
 
 .sg-aura {

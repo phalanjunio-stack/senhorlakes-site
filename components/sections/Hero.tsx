@@ -97,12 +97,13 @@ export default function Hero() {
           <Reveal delay={80}>
             <span
               aria-hidden
-              className="font-display block text-[clamp(4.2rem,13vw,10rem)] leading-[0.7] font-extrabold tracking-[-0.075em] uppercase"
+              className="hero-title font-display block font-extrabold uppercase"
             >
               <span className="block">Sen</span>
               <span className="ml-[0.28em] block">Hor</span>
+              {/* sálvia, como a palavra LAKES na logo */}
               <span
-                className="ml-[0.09em] block text-charcoal"
+                className="ml-[0.09em] block text-accent/90"
                 style={{ transform: "translateX(calc(var(--mx, 0) * 10px))" }}
               >
                 Lakes
@@ -123,10 +124,11 @@ export default function Hero() {
               href="/albuns"
               onClick={() => {
                 primary.burst();
-                play("navigate");
+                play("open");
               }}
               data-cursor="OUVIR"
-              className="smoke-glow inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#c9dedb] to-accent px-6 py-3 font-display text-sm font-semibold tracking-[0.12em] text-ink uppercase transition hover:scale-[1.04]"
+              className="smoke-glow inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-gold to-gold-deep px-6 py-3 font-display text-sm font-semibold tracking-[0.12em] text-ink uppercase transition hover:scale-[1.04]"
+              style={{ "--glow-rgb": "201 162 39", "--glow-spark": "#f3dc94" } as React.CSSProperties}
             >
               <Glow ripple={primary.ripple} />
               <Play size={15} fill="currentColor" /> Ouvir agora
@@ -136,7 +138,7 @@ export default function Hero() {
               href="/#agenda"
               onClick={() => {
                 secondary.burst();
-                play("click");
+                play("open");
               }}
               data-cursor="VER"
               className="smoke-glow inline-flex items-center gap-2 rounded-full border border-white/45 bg-white/5 px-6 py-3 font-display text-sm font-semibold tracking-[0.12em] text-paper uppercase transition hover:scale-[1.04] hover:border-accent hover:text-accent"

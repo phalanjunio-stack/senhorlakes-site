@@ -25,7 +25,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
           href={`/albuns/${album.slug}`}
           aria-label={`Abrir ${album.title}`}
           data-cursor="ABRIR"
-          onClick={() => play("navigate")}
+          onClick={() => play("click")}
         >
           <AlbumArt
             album={album}
@@ -49,10 +49,10 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
           onClick={() => {
             burst();
             if (isCurrent) {
-              play(isPlaying ? "drop" : "click");
+              play(isPlaying ? "close" : "open");
               toggle();
             } else {
-              play("success");
+              play("open");
               playAlbum(album, tracks);
             }
           }}
@@ -77,7 +77,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
       <Link
         href={`/albuns/${album.slug}`}
         className="mt-3 block"
-        onClick={() => play("navigate")}
+        onClick={() => play("click")}
         data-cursor="ABRIR"
       >
         <h3
