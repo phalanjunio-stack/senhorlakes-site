@@ -65,7 +65,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
           }
           aria-label={showPause ? `Pausar ${album.title}` : `Tocar ${album.title}`}
         >
-          <Glow ripple={ripple} />
+          <Glow ripple={ripple} round />
           {showPause ? (
             <Pause size={19} fill="currentColor" />
           ) : (

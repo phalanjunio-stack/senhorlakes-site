@@ -340,11 +340,28 @@ a {
   transform: scale(1.06);
 }
 
+/* Aura padrão: elipse que acompanha o formato do elemento, sem escala,
+   para não transbordar em botões compridos. */
 .sg-aura {
   position: absolute;
-  inset: -14px;
+  inset: -12px;
   z-index: -1;
   border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgb(var(--glow-rgb) / 0.5) 0%,
+    rgb(var(--glow-rgb) / 0.26) 45%,
+    rgb(var(--glow-rgb) / 0.1) 70%,
+    transparent 92%
+  );
+  filter: blur(7px);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+/* Em botão redondo a aura pode ser um círculo de verdade e respirar. */
+.sg-aura.is-round {
+  inset: -14px;
   background: radial-gradient(
     circle at 50% 50%,
     rgb(var(--glow-rgb) / 0.55) 0%,
@@ -353,8 +370,6 @@ a {
     transparent 75%
   );
   filter: blur(6px);
-  opacity: 0;
-  transition: opacity 320ms ease;
 }
 
 .sg-halo {
@@ -392,9 +407,16 @@ a {
   transition: opacity 250ms ease;
 }
 
+/* Botão comprido: pulsa só a opacidade — escalar espalharia o brilho
+   muito além das bordas. */
 .motion-on .smoke-glow:hover .sg-aura,
 .motion-on .smoke-glow:focus-visible .sg-aura {
   opacity: 1;
+  animation: sg-aura-breathe 2.6s ease-in-out infinite;
+}
+
+.motion-on .smoke-glow:hover .sg-aura.is-round,
+.motion-on .smoke-glow:focus-visible .sg-aura.is-round {
   animation: sg-aura-pulse 2.6s ease-in-out infinite;
 }
 
@@ -408,6 +430,16 @@ a {
 .motion-on .smoke-glow:focus-visible .sg-spark {
   opacity: 1;
   animation: sg-spark-orbit var(--d, 2s) ease-in-out var(--del, 0s) infinite;
+}
+
+@keyframes sg-aura-breathe {
+  0%,
+  100% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 @keyframes sg-aura-pulse {

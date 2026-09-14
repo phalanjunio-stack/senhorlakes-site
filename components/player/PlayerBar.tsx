@@ -89,7 +89,7 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
         }`}
         aria-label={isPlaying ? "Pausar" : "Reproduzir"}
       >
-        <Glow ripple={ripple} />
+        <Glow ripple={ripple} round />
         {isLoading && !isPlaying ? (
           <span
             className="block size-4 animate-spin rounded-full border-2 border-ink/25 border-t-ink"

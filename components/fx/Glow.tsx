@@ -10,31 +10,39 @@ const SPARKS = [
 ];
 
 /**
- * Aura + halo + faíscas orbitando, acesas no hover do elemento-pai
- * (que precisa ter `position: relative` e a classe `smoke-glow`).
+ * Aura acesa no hover do elemento-pai (que precisa ter `position: relative`
+ * e a classe `smoke-glow`). A cor sai de `--glow-rgb`.
  *
- * Portado do painel da Contourline. A cor sai de `--glow-rgb`, então
- * dá para pintar cada botão com a cor do próprio álbum.
+ * `round` liga o halo giratório e as faíscas orbitando — eles só funcionam
+ * em botões circulares, porque giram em torno do centro. Num botão
+ * comprido a rotação joga o brilho para fora da forma, então a versão
+ * padrão usa só a aura, que acompanha qualquer formato.
+ *
+ * Portado do painel da Contourline.
  */
-export default function Glow({ ripple = 0 }: { ripple?: number }) {
+export default function Glow({ ripple = 0, round = false }: { ripple?: number; round?: boolean }) {
   return (
     <>
-      <span className="sg-aura" aria-hidden />
-      <span className="sg-halo" aria-hidden />
-      {SPARKS.map((spark, i) => (
-        <span
-          key={i}
-          className="sg-spark"
-          aria-hidden
-          style={
-            {
-              "--ang": `${spark.ang}deg`,
-              "--d": `${spark.dur}s`,
-              "--del": `${spark.delay}s`,
-            } as React.CSSProperties
-          }
-        />
-      ))}
+      <span className={`sg-aura ${round ? "is-round" : ""}`} aria-hidden />
+      {round && (
+        <>
+          <span className="sg-halo" aria-hidden />
+          {SPARKS.map((spark, i) => (
+            <span
+              key={i}
+              className="sg-spark"
+              aria-hidden
+              style={
+                {
+                  "--ang": `${spark.ang}deg`,
+                  "--d": `${spark.dur}s`,
+                  "--del": `${spark.delay}s`,
+                } as React.CSSProperties
+              }
+            />
+          ))}
+        </>
+      )}
       {/* trocar a key remonta o elemento e a animação toca de novo */}
       {ripple > 0 && <span key={ripple} className="sg-ripple" aria-hidden />}
     </>
