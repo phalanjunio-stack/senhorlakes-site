@@ -565,40 +565,6 @@ a {
     user-select: none;
   }
 
-  /* ── Faixa rolante ─────────────────────────────────────── */
-
-  .marquee {
-    display: flex;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  .marquee__row {
-    display: flex;
-    flex-shrink: 0;
-    gap: 3rem;
-    padding-right: 3rem;
-    white-space: nowrap;
-  }
-
-  .motion-on .marquee__row {
-    animation: marquee-slide var(--marquee-duration, 34s) linear infinite;
-  }
-
-  .motion-on .marquee:hover .marquee__row {
-    animation-play-state: paused;
-  }
-
-  .marquee--reverse .marquee__row {
-    animation-direction: reverse;
-  }
-
-  @keyframes marquee-slide {
-    to {
-      transform: translateX(-100%);
-    }
-  }
-
   /* ── Linha da agenda ───────────────────────────────────── */
 
   /* Varredura dourada que entra pela esquerda no hover. */

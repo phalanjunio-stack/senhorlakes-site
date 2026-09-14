@@ -1,4 +1,3 @@
-import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import { albums, band, members, tracks, upcomingEvents } from "@/lib/data";
 
@@ -54,12 +53,6 @@ export default function Claim() {
           </dl>
         </Reveal>
       </div>
-
-      <Marquee
-        className="font-display mt-16 text-[clamp(2.2rem,6vw,4.4rem)] font-extrabold tracking-[-0.03em] text-white/[0.07] uppercase"
-        words={["Rock", "Pessoas", "Lugares", "Histórias", "Palco", "Estrada"]}
-        duration={42}
-      />
     </section>
   );
 }
