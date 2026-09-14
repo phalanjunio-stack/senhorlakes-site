@@ -4,6 +4,7 @@ import Agenda from "@/components/sections/Agenda";
 import Albuns from "@/components/sections/Albuns";
 import Videos from "@/components/sections/Videos";
 import Galeria from "@/components/sections/Galeria";
+import Claim from "@/components/sections/Claim";
 import { siteUrl } from "@/lib/site";
 import { upcomingEvents, band } from "@/lib/data";
 
@@ -35,6 +36,7 @@ export default function Home() {
       )}
       <Hero />
       <Banda />
+      <Claim />
       <Agenda />
       <Albuns />
       <Videos />

@@ -24,7 +24,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
         <Link
           href={`/albuns/${album.slug}`}
           aria-label={`Abrir ${album.title}`}
-          data-cursor="ABRIR"
+         
           onClick={() => play("click")}
         >
           <AlbumArt
@@ -45,7 +45,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
 
         <button
           type="button"
-          data-cursor={showPause ? "PAUSAR" : "PLAY"}
+         
           onClick={() => {
             burst();
             if (isCurrent) {
@@ -78,7 +78,7 @@ export default function AlbumCard({ album, priority = false }: { album: Album; p
         href={`/albuns/${album.slug}`}
         className="mt-3 block"
         onClick={() => play("click")}
-        data-cursor="ABRIR"
+       
       >
         <h3
           className={`font-display truncate text-lg leading-tight font-bold tracking-tight uppercase transition ${

@@ -21,7 +21,7 @@ export default function AlbumActions({ album }: { album: Album }) {
     <div className="mt-7 flex flex-wrap items-center gap-3">
       <button
         type="button"
-        data-cursor={showPause ? "PAUSAR" : "PLAY"}
+       
         onClick={() => {
           main.burst();
           if (isCurrent) {
@@ -49,7 +49,7 @@ export default function AlbumActions({ album }: { album: Album }) {
 
       <button
         type="button"
-        data-cursor="MISTURAR"
+       
         onClick={() => {
           random.burst();
           play("chatOpen");

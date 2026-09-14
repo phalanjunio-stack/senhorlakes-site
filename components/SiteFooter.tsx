@@ -25,7 +25,7 @@ export default function SiteFooter() {
               href={whatsappLink()}
               target="_blank"
               rel="noreferrer noopener"
-              data-cursor="FALAR"
+             
               className="smoke-glow mt-7 inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 font-display text-sm font-bold tracking-[0.12em] text-ink uppercase transition hover:scale-[1.04]"
             >
               Chamar no WhatsApp <ArrowUpRight size={16} />

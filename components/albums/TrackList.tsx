@@ -22,7 +22,7 @@ export default function TrackList({ album }: { album: Album }) {
           <li key={track.slug}>
             <button
               type="button"
-              data-cursor={playingThis ? "PAUSAR" : "PLAY"}
+             
               onClick={() => {
                 if (isCurrent) {
                   play(isPlaying ? "close" : "open");

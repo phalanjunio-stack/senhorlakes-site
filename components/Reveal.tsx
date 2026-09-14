@@ -23,6 +23,18 @@ export default function Reveal({
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+
+    /* A margem negativa abaixo segura a animação até o elemento entrar
+       um pouco na tela — bom ao rolar, péssimo para o que já nasce
+       visível perto do rodapé da primeira tela, que nunca cruzaria esse
+       limite e ficaria invisível para sempre. Então o que já está na
+       viewport no primeiro quadro aparece direto. */
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

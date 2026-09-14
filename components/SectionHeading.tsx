@@ -7,15 +7,23 @@ export default function SectionHeading({
   id,
   /** alterna a cor do rótulo entre as seções para o site não ficar monocromático */
   tone = "sage",
+  /** numeral gigante de fundo, puro enfeite editorial */
+  ghost,
 }: {
   index: string;
   title: React.ReactNode;
   aside?: React.ReactNode;
   id?: string;
   tone?: "sage" | "gold";
+  ghost?: string;
 }) {
   return (
-    <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-6 pb-6">
+    <Reveal className="relative isolate mb-10 flex flex-wrap items-end justify-between gap-6 pb-6">
+      {ghost && (
+        <span className="ghost-number" aria-hidden>
+          {ghost}
+        </span>
+      )}
       <div>
         <p className={`eyebrow ${tone === "gold" ? "eyebrow-gold" : ""}`}>{index}</p>
         <h2

@@ -8,6 +8,7 @@ export default function Banda() {
     <section id="banda" className="page-width scroll-mt-24 py-24" aria-labelledby="banda-title">
       <SectionHeading
         id="banda-title"
+        ghost="01"
         index="01 / Formação"
         title="A Banda"
         aside={
@@ -25,7 +26,7 @@ export default function Banda() {
             <Tilt>
             <article
               className="group relative aspect-[3/4] overflow-hidden rounded-xl"
-              data-cursor={member.name.toUpperCase()}
+             
             >
               <div
                 className="absolute inset-[-3%] bg-no-repeat grayscale brightness-[0.72] contrast-[1.16] transition duration-700 group-hover:scale-[1.06] group-hover:grayscale-0 group-hover:brightness-90"

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Play } from "lucide-react";
+import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import Glow, { useRipple } from "@/components/fx/Glow";
 import { useFx } from "@/components/fx/FxProvider";
@@ -11,9 +12,9 @@ import { InstagramIcon, WhatsappIcon, YoutubeIcon } from "@/components/icons/Soc
 import { band, whatsappLink } from "@/lib/data";
 
 const socials = [
-  { href: band.instagram, label: "Instagram", Icon: InstagramIcon, cursor: "ABRIR" },
-  { href: band.youtube, label: "YouTube", Icon: YoutubeIcon, cursor: "PLAY" },
-  { href: whatsappLink(), label: "WhatsApp", Icon: WhatsappIcon, cursor: "FALAR" },
+  { href: band.instagram, label: "Instagram", Icon: InstagramIcon },
+  { href: band.youtube, label: "YouTube", Icon: YoutubeIcon },
+  { href: whatsappLink(), label: "WhatsApp", Icon: WhatsappIcon },
 ];
 
 export default function Hero() {
@@ -30,7 +31,7 @@ export default function Hero() {
     <section
       ref={ref}
       id="inicio"
-      className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pt-24 pb-14"
+      className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pt-24 pb-24"
       aria-labelledby="hero-title"
     >
       {/* fundo — anda ao contrário do ponteiro */}
@@ -126,7 +127,7 @@ export default function Hero() {
                 primary.burst();
                 play("open");
               }}
-              data-cursor="OUVIR"
+             
               className="smoke-glow inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-gold to-gold-deep px-6 py-3 font-display text-sm font-semibold tracking-[0.12em] text-ink uppercase transition hover:scale-[1.04]"
               style={{ "--glow-rgb": "201 162 39", "--glow-spark": "#f3dc94" } as React.CSSProperties}
             >
@@ -140,7 +141,7 @@ export default function Hero() {
                 secondary.burst();
                 play("open");
               }}
-              data-cursor="VER"
+             
               className="smoke-glow inline-flex items-center gap-2 rounded-full border border-white/45 bg-white/5 px-6 py-3 font-display text-sm font-semibold tracking-[0.12em] text-paper uppercase transition hover:scale-[1.04] hover:border-accent hover:text-accent"
             >
               <Glow ripple={secondary.ripple} />
@@ -151,13 +152,13 @@ export default function Hero() {
 
         <Reveal delay={320}>
           <nav className="mt-10 flex flex-wrap gap-x-7 gap-y-3" aria-label="Redes sociais da banda">
-            {socials.map(({ href, label, Icon, cursor }) => (
+            {socials.map(({ href, label, Icon }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noreferrer noopener"
-                data-cursor={cursor}
+               
                 onClick={() => play("click")}
                 className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-accent"
               >
@@ -168,6 +169,13 @@ export default function Hero() {
           </nav>
         </Reveal>
       </div>
+
+      {/* assinatura rolante no pé do topo — as mesmas palavras do site original */}
+      <Marquee
+        className="font-display absolute inset-x-0 bottom-0 border-t border-[var(--line)] bg-ink/45 py-3 text-[0.7rem] font-semibold tracking-[0.34em] text-muted uppercase backdrop-blur-sm"
+        words={["Rock", "Pessoas", "Lugares", "Histórias", "Pop rock ao vivo", band.city]}
+        duration={38}
+      />
     </section>
   );
 }

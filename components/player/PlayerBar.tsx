@@ -64,7 +64,7 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
     <div className="flex items-center gap-2">
       <button
         type="button"
-        data-cursor="ANTERIOR"
+       
         onClick={() => {
           play("click");
           previous();
@@ -78,7 +78,7 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
 
       <button
         type="button"
-        data-cursor={isPlaying ? "PAUSAR" : "PLAY"}
+       
         onClick={() => {
           burst();
           play(isPlaying ? "close" : "open");
@@ -104,7 +104,7 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
 
       <button
         type="button"
-        data-cursor="PRÓXIMA"
+       
         onClick={() => {
           play("click");
           next();
@@ -211,7 +211,7 @@ function NowPlayingSheet() {
       <header className="relative flex items-center justify-between px-5 py-4 lg:px-10">
         <button
           type="button"
-          data-cursor="FECHAR"
+         
           onClick={() => {
             play("close");
             setExpanded(false);
@@ -261,7 +261,7 @@ function NowPlayingSheet() {
                 <li key={`${track.slug}-${i}`}>
                   <button
                     type="button"
-                    data-cursor="PLAY"
+                   
                     onClick={() => {
                       play("click");
                       jumpTo(i);
@@ -338,7 +338,7 @@ export default function PlayerBar() {
           {/* faixa atual */}
           <button
             type="button"
-            data-cursor="ABRIR"
+           
             onClick={() => {
               play("chatOpen");
               setExpanded(true);
@@ -374,7 +374,7 @@ export default function PlayerBar() {
             <VolumeControl />
             <button
               type="button"
-              data-cursor="FILA"
+             
               onClick={() => {
                 play("chatOpen");
                 setExpanded(true);

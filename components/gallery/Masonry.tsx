@@ -24,7 +24,7 @@ function Tile({ photo, index, onOpen }: { photo: Photo; index: number; onOpen: (
       <button
         type="button"
         onClick={onOpen}
-        data-cursor="VER"
+       
         className="group relative block w-full overflow-hidden rounded-xl bg-graphite text-left"
         style={{ aspectRatio: photo.ratio }}
         aria-label={photo.caption ? `Abrir foto: ${photo.caption}` : "Abrir foto"}
@@ -95,7 +95,7 @@ export default function Masonry({ limit }: { limit?: number }) {
             <button
               key={item.key}
               type="button"
-              data-cursor="FILTRAR"
+             
               onClick={() => {
                 play("click");
                 setFilter(item.key);

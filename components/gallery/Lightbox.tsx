@@ -56,7 +56,7 @@ export default function Lightbox({
       <button
         type="button"
         onClick={onClose}
-        data-cursor="FECHAR"
+       
         className="absolute top-5 right-5 grid size-11 place-items-center rounded-full bg-white/10 text-paper transition hover:bg-white/20"
         aria-label="Fechar"
       >
@@ -71,7 +71,7 @@ export default function Lightbox({
               event.stopPropagation();
               go(-1);
             }}
-            data-cursor="ANTERIOR"
+           
             className="absolute left-3 grid size-11 place-items-center rounded-full bg-white/10 text-paper transition hover:bg-white/20 lg:left-8"
             aria-label="Foto anterior"
           >
@@ -83,7 +83,7 @@ export default function Lightbox({
               event.stopPropagation();
               go(1);
             }}
-            data-cursor="PRÓXIMA"
+           
             className="absolute right-3 grid size-11 place-items-center rounded-full bg-white/10 text-paper transition hover:bg-white/20 lg:right-8"
             aria-label="Próxima foto"
           >

@@ -9,6 +9,7 @@ export default function Galeria() {
     <section id="galeria" className="page-width scroll-mt-24 py-24" aria-labelledby="galeria-title">
       <SectionHeading
         id="galeria-title"
+        ghost="05"
         index="05 / Registros"
         title={
           <>

@@ -72,7 +72,7 @@ export default function FxControls() {
             }}
             className={` text-muted`}
             aria-label="Voltar ao topo"
-            data-cursor="TOPO"
+           
           >
             <Glow ripple={top.ripple} round />
             <ArrowUp size={17} />
@@ -89,7 +89,7 @@ export default function FxControls() {
           aria-pressed={sound}
           aria-label={sound ? "Desligar efeitos sonoros" : "Ligar efeitos sonoros"}
           title={sound ? "Som: ligado" : "Som: desligado"}
-          data-cursor={sound ? "MUDO" : "SOM"}
+         
         >
           <Glow ripple={snd.ripple} round />
           {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
@@ -106,7 +106,7 @@ export default function FxControls() {
           aria-pressed={motion}
           aria-label={motion ? "Desligar animações" : "Ligar animações"}
           title={motion ? "Movimento: ligado" : "Movimento: desligado"}
-          data-cursor="MOV"
+         
         >
           <Glow ripple={mov.ripple} round />
           <Sparkles size={17} />

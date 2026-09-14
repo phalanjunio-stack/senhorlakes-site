@@ -7,9 +7,15 @@ import { albums } from "@/lib/data";
 
 export default function Albuns() {
   return (
-    <section id="albuns" className="page-width scroll-mt-24 py-24" aria-labelledby="albuns-title">
+    <section
+      id="albuns"
+      className="panel hatch scroll-mt-24 py-24"
+      aria-labelledby="albuns-title"
+    >
+      <div className="page-width relative">
       <SectionHeading
         id="albuns-title"
+        ghost="03"
         index="03 / Gravações"
         title="Ouça a banda"
         aside="Toque direto daqui. O player acompanha você por todas as páginas do site."
@@ -33,6 +39,7 @@ export default function Albuns() {
           </Link>
         </Reveal>
       )}
+      </div>
     </section>
   );
 }

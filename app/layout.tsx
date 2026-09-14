@@ -6,7 +6,6 @@ import SiteFooter from "@/components/SiteFooter";
 import { PlayerProvider } from "@/components/player/PlayerProvider";
 import PlayerBar from "@/components/player/PlayerBar";
 import { FxProvider } from "@/components/fx/FxProvider";
-import CustomCursor from "@/components/fx/CustomCursor";
 import FxControls from "@/components/fx/FxControls";
 import { band } from "@/lib/data";
 import { siteUrl } from "@/lib/site";
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SiteFooter />
             <PlayerBar />
             <FxControls />
-            <CustomCursor />
           </PlayerProvider>
         </FxProvider>
       </body>

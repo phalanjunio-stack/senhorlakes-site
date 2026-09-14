@@ -67,6 +67,7 @@ export default function Videos() {
       <SectionHeading
         id="videos-title"
         tone="gold"
+        ghost="04"
         index="04 / Vídeos"
         title="No palco"
         aside="Registros ao vivo, clipes e bastidores."

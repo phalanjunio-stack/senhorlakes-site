@@ -18,6 +18,7 @@ export default function Agenda() {
       <SectionHeading
         id="agenda-title"
         tone="gold"
+        ghost="02"
         index="02 / Próximos shows"
         title="Agenda"
         aside={
@@ -53,30 +54,35 @@ export default function Agenda() {
                   href={event.url ?? whatsappLink(`Olá! Quero detalhes do show em ${event.city}.`)}
                   target={event.url ? undefined : "_blank"}
                   rel="noreferrer noopener"
-                  data-cursor="VER"
-                  className="group flex flex-wrap items-center gap-x-8 gap-y-3 px-1 py-7 transition hover:bg-white/[0.03]"
+                  className="gig group relative isolate flex flex-wrap items-center gap-x-8 gap-y-3 overflow-hidden px-4 py-8"
                 >
                   <time
                     dateTime={event.date}
                     className="font-display flex shrink-0 items-baseline gap-2 border-r border-[var(--line)] pr-8"
                   >
-                    <strong className="text-4xl font-extrabold tracking-tight text-gold">{day}</strong>
+                    <strong className="inline-block text-5xl font-extrabold tracking-tight text-gold transition-transform duration-500 group-hover:scale-110">
+                      {day}
+                    </strong>
                     <span className="text-sm tracking-[0.2em] text-muted uppercase">
                       {month} {year}
                     </span>
                   </time>
 
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-2xl font-bold tracking-tight uppercase">
+                    <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.25rem)] leading-none font-extrabold tracking-[-0.02em] uppercase transition-colors duration-300 group-hover:text-gold">
                       {event.city}
                     </h3>
-                    <p className="flex items-center gap-1.5 text-sm text-muted">
-                      <MapPin size={13} /> {event.venue}
+                    <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+                      <MapPin size={13} className="text-accent" /> {event.venue}
                     </p>
                   </div>
 
-                  <span className="inline-flex items-center gap-1.5 font-display text-xs font-semibold tracking-[0.18em] text-muted uppercase transition group-hover:text-accent">
-                    Detalhes <ArrowUpRight size={14} />
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-5 py-2.5 font-display text-xs font-semibold tracking-[0.18em] text-muted uppercase transition duration-300 group-hover:border-gold group-hover:text-gold">
+                    Detalhes
+                    <ArrowUpRight
+                      size={14}
+                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
                   </span>
                 </a>
               </Reveal>

@@ -58,7 +58,7 @@ export default function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              data-cursor="IR"
+             
               onClick={() => play("open")}
               className="font-display text-xs font-semibold tracking-[0.22em] text-muted uppercase transition hover:text-paper"
             >
@@ -75,7 +75,7 @@ export default function SiteHeader() {
 
         <button
           type="button"
-          data-cursor="MENU"
+         
           onClick={() => {
             play(open ? "close" : "open");
             setOpen((value) => !value);
