@@ -1,11 +1,18 @@
 name: Publicar no GitHub Pages
 
-# Todo push no main reconstrói o site e publica. É isso que faz o painel
-# de administração valer a pena: você salva lá, vira um commit aqui, e
-# em ~2 minutos está no ar sem ninguém rodar nada na mão.
+# PARADO DE PROPÓSITO — só roda se alguém mandar rodar.
+#
+# Quem publica o site agora é a Cloudflare. Este workflow continuava
+# empurrando o resultado para o ramo gh-pages, e a Cloudflare, vendo
+# push naquele ramo, tentava construir ele também. Só que gh-pages
+# guarda páginas prontas, não tem package.json, e o build quebrava.
+# Eram duas falhas a cada publicação de verdade.
+#
+# O site que já está no GitHub Pages continua no ar, congelado no último
+# build. Ele existe só para não quebrar links já compartilhados — some
+# quando o domínio próprio entrar, que é também quando a cópia dupla
+# deixa de atrapalhar o Google.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 # Precisa escrever porque o build é empurrado para o branch gh-pages,
