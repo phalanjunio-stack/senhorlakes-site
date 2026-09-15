@@ -96,6 +96,68 @@ content:
                 - { value: "1.7778", label: "Panorâmica (16:9)" }
                 - { value: "0.8", label: "Em pé suave (4:5)" }
 
+  - name: historias
+    label: Histórias
+    type: file
+    path: content/historias.json
+    format: json
+    fields:
+      - name: stories
+        label: Histórias
+        type: object
+        list: true
+        fields:
+          - name: slug
+            label: Endereço
+            type: string
+            required: true
+            description: "Vira o link direto para a história. Só minúsculas e hífens: de-onde-vem-o-nome."
+          - name: kicker
+            label: Chapéu
+            type: string
+            description: "A palavrinha acima do título: A origem do nome, Bastidores, Na estrada…"
+          - name: title
+            label: Título
+            type: string
+            required: true
+          - name: lead
+            label: Linha de apoio
+            type: text
+            description: Uma ou duas frases abaixo do título, para dar vontade de ler o resto.
+          - name: photo
+            label: Foto
+            type: image
+            description: Opcional. Sem ela a história aparece com um espaço reservado no lugar.
+          - name: ratio
+            label: Formato da foto
+            type: select
+            required: true
+            description: Reserva o espaço certo na página. Escolher errado corta a imagem.
+            options:
+              values:
+                - { value: "0.5625", label: "Em pé, foto de celular (9:16)" }
+                - { value: "0.6667", label: "Em pé (2:3)" }
+                - { value: "0.8", label: "Em pé suave (4:5)" }
+                - { value: "1", label: "Quadrada (1:1)" }
+                - { value: "1.5", label: "Deitada (3:2)" }
+                - { value: "1.7778", label: "Panorâmica (16:9)" }
+          - name: alt
+            label: Descrição da foto
+            type: string
+            description: "Para quem não enxerga a imagem. Exemplo: dois homens abraçados em frente a um bar."
+          - name: caption
+            label: Legenda da foto
+            type: string
+            description: O textinho que aparece embaixo da foto, no site.
+          - name: body
+            label: Texto
+            type: text
+            required: true
+            description: >-
+              Deixe uma linha em branco entre um parágrafo e outro. Para destacar
+              um trecho, escreva **entre dois asteriscos**. Uma linha começando
+              com > vira citação em letra grande.
+
   - name: videos
     label: Vídeos
     type: file

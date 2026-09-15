@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: siteUrl, lastModified: now, priority: 1 },
     { url: `${siteUrl}/albuns`, lastModified: now, priority: 0.8 },
+    { url: `${siteUrl}/historias`, lastModified: now, priority: 0.7 },
     { url: `${siteUrl}/galeria`, lastModified: now, priority: 0.6 },
     ...albums.map((album) => ({
       url: `${siteUrl}/albuns/${album.slug}`,

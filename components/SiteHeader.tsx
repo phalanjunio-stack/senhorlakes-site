@@ -11,6 +11,7 @@ import { band } from "@/lib/data";
 const links = [
   { href: "/#inicio", label: "Início" },
   { href: "/#banda", label: "Banda" },
+  { href: "/historias", label: "Histórias" },
   { href: "/#agenda", label: "Agenda" },
   { href: "/albuns", label: "Álbuns" },
   { href: "/#videos", label: "Vídeos" },

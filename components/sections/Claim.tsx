@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { albums, band, members, tracks, upcomingEvents } from "@/lib/data";
 
@@ -33,6 +35,14 @@ export default function Claim() {
             <br />
             <span className="text-gold">Boas histórias.</span>
           </p>
+
+          {/* A frase é a promessa da banda; o link é onde ela se cumpre. */}
+          <Link
+            href="/historias"
+            className="font-display mt-7 inline-flex items-center gap-2 text-sm font-semibold tracking-[0.18em] text-muted uppercase transition hover:text-gold"
+          >
+            Ler as histórias <ArrowUpRight size={15} />
+          </Link>
         </Reveal>
 
         <Reveal delay={120}>

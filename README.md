@@ -16,8 +16,9 @@ Abre em http://localhost:3000.
 **https://app.pagescms.org** — entre com a conta do GitHub e escolha este
 repositório. Não precisa instalar nada nem mexer em código.
 
-O painel tem sete seções: agenda de shows, galeria de fotos, vídeos, álbuns,
-músicas, integrantes e contato. Fotos são enviadas arrastando para o campo.
+O painel tem oito seções: agenda de shows, galeria de fotos, histórias, vídeos,
+álbuns, músicas, integrantes e contato. Fotos são enviadas arrastando para o
+campo.
 
 Quando você salva, o painel faz um commit aqui; o GitHub Actions reconstrói o
 site e publica sozinho. Leva cerca de dois minutos até aparecer no ar.
@@ -39,6 +40,7 @@ direto ali funciona igual — o painel só é uma forma mais confortável.
 | Shows | `content/shows.json` |
 | Vídeos | `content/videos.json` |
 | Fotos da galeria | `content/fotos.json` |
+| Histórias | `content/historias.json` |
 
 [`lib/data.ts`](lib/data.ts) lê esses arquivos, dá tipo a eles e guarda as
 funções de apoio. Só mexa nele para mudar as regras, não o conteúdo.
@@ -65,6 +67,30 @@ espremida ou esticada no lugar dela na grade.
 
 As entradas sem foto são espaços reservados, só para enxergar o layout. Apague
 conforme for subindo as fotos de verdade.
+
+### Escrever uma história
+
+No painel, seção **Histórias**. É a página `/historias`, e cada história tem
+chapéu, título, uma linha de apoio, uma foto e o texto.
+
+O campo **Texto** aceita três coisas, e só três:
+
+| Para… | Escreva |
+| --- | --- |
+| separar parágrafos | uma linha em branco entre eles |
+| destacar um trecho | `**entre dois asteriscos**` |
+| dar destaque a uma fala | a linha começando com `>` |
+
+A fala com `>` sai em letra grande, entre aspas, atravessando o texto — é o
+lugar da frase que resume a história. Use uma por história; duas competem
+entre si.
+
+Não há títulos internos, listas nem links de propósito: o que faz uma história
+funcionar aqui é o texto corrido e a foto ao lado.
+
+O campo **Formato da foto** é o mesmo da galeria. Foto tirada em pé no celular
+é quase sempre **9:16**. Errar aqui não distorce a imagem, mas reserva um
+buraco do tamanho errado para ela.
 
 ### Adicionar um vídeo
 

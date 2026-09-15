@@ -17,6 +17,7 @@ import albunsJson from "@/content/albuns.json";
 import showsJson from "@/content/shows.json";
 import videosJson from "@/content/videos.json";
 import fotosJson from "@/content/fotos.json";
+import historiasJson from "@/content/historias.json";
 
 export type Track = {
   /** identificador único, usado na URL e no player */
@@ -76,6 +77,23 @@ export type Photo = {
   ratio: number;
 };
 
+export type Story = {
+  slug: string;
+  /** palavrinha acima do título — "A origem do nome", "Bastidores" */
+  kicker?: string;
+  title: string;
+  /** linha de apoio logo abaixo do título */
+  lead?: string;
+  /** caminho de uma imagem em /public. null = história ainda sem foto */
+  photo: string | null;
+  alt?: string;
+  caption?: string;
+  /** proporção largura/altura da foto — reserva o espaço certo e evita corte */
+  ratio: number;
+  /** texto corrido — as regras de formatação estão em components/Prose.tsx */
+  body: string;
+};
+
 /* ── DADOS ─────────────────────────────────────────────── */
 /* O JSON chega com tipos largos (string no lugar das uniões, por
    exemplo), por isso a afirmação de tipo aqui. O painel valida os
@@ -87,6 +105,12 @@ export const tracks = faixasJson.tracks as Track[];
 export const albums = albunsJson.albums as Album[];
 export const events = showsJson.events as GigEvent[];
 export const videos = videosJson.videos as Video[];
+/* Mesma conversão das fotos, pelo mesmo motivo: o campo de seleção do
+   painel grava texto e o layout precisa de número. */
+export const stories = historiasJson.stories.map((historia) => ({
+  ...historia,
+  ratio: Number(historia.ratio),
+})) as Story[];
 /* O formato da foto é um campo de seleção no painel, e seleção grava
    texto. Aqui vira número, que é o que o mosaico usa para calcular a
    altura. Number() aceita tanto "1.5" quanto 1.5, então funciona com
@@ -109,6 +133,8 @@ export function albumDuration(album: Album): number {
 }
 
 export const albumBySlug = (slug: string) => albums.find((a) => a.slug === slug);
+
+export const storyBySlug = (slug: string) => stories.find((h) => h.slug === slug);
 
 /** 235 → "3:55" */
 export function formatTime(seconds: number): string {
