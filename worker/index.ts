@@ -243,6 +243,21 @@ export default {
 
     if (!rota.startsWith("/api/")) return new Response("Não encontrado", { status: 404 });
 
+    /* Segredo faltando é o erro mais provável de quem está configurando
+       o painel pela primeira vez. Sem esta conferência ele estouraria
+       lá dentro com um 500 mudo, e quem está do outro lado ficaria
+       adivinhando qual valor não foi colado. */
+    const faltando = (
+      ["ADMIN_EMAIL", "ADMIN_SENHA_HASH", "SESSAO_SEGREDO", "GITHUB_TOKEN", "GITHUB_REPO"] as const
+    ).filter((nome) => !env[nome]);
+
+    if (faltando.length > 0) {
+      return json(
+        { erro: "painel não configurado", faltando },
+        { status: 503 },
+      );
+    }
+
     /* Entrar */
     if (rota === "/api/entrar" && pedido.method === "POST") {
       const { email, senha } = (await pedido.json().catch(() => ({}))) as {
