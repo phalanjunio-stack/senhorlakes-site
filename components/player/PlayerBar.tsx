@@ -119,35 +119,48 @@ function TransportButtons({ size = "md" }: { size?: "md" | "lg" }) {
   );
 }
 
+function ShuffleButton() {
+  const { shuffle, toggleShuffle } = usePlayer();
+  return (
+    <button
+      type="button"
+      onClick={toggleShuffle}
+      className={`grid size-8 place-items-center rounded-full transition ${
+        shuffle ? "text-accent" : "text-muted hover:text-paper"
+      }`}
+      aria-pressed={shuffle}
+      aria-label="Ordem aleatória"
+      title="Ordem aleatória"
+    >
+      <Shuffle size={16} />
+    </button>
+  );
+}
+
+function RepeatButton() {
+  const { repeat, cycleRepeat } = usePlayer();
+  return (
+    <button
+      type="button"
+      onClick={cycleRepeat}
+      className={`grid size-8 place-items-center rounded-full transition ${
+        repeat !== "off" ? "text-accent" : "text-muted hover:text-paper"
+      }`}
+      aria-label={
+        repeat === "one" ? "Repetir a faixa" : repeat === "all" ? "Repetir a fila" : "Repetição desligada"
+      }
+      title={repeat === "one" ? "Repetir faixa" : repeat === "all" ? "Repetir fila" : "Repetir"}
+    >
+      {repeat === "one" ? <Repeat1 size={16} /> : <Repeat size={16} />}
+    </button>
+  );
+}
+
 function ModeButtons() {
-  const { shuffle, toggleShuffle, repeat, cycleRepeat } = usePlayer();
   return (
     <>
-      <button
-        type="button"
-        onClick={toggleShuffle}
-        className={`grid size-8 place-items-center rounded-full transition ${
-          shuffle ? "text-accent" : "text-muted hover:text-paper"
-        }`}
-        aria-pressed={shuffle}
-        aria-label="Ordem aleatória"
-        title="Ordem aleatória"
-      >
-        <Shuffle size={16} />
-      </button>
-      <button
-        type="button"
-        onClick={cycleRepeat}
-        className={`grid size-8 place-items-center rounded-full transition ${
-          repeat !== "off" ? "text-accent" : "text-muted hover:text-paper"
-        }`}
-        aria-label={
-          repeat === "one" ? "Repetir a faixa" : repeat === "all" ? "Repetir a fila" : "Repetição desligada"
-        }
-        title={repeat === "one" ? "Repetir faixa" : repeat === "all" ? "Repetir fila" : "Repetir"}
-      >
-        {repeat === "one" ? <Repeat1 size={16} /> : <Repeat size={16} />}
-      </button>
+      <ShuffleButton />
+      <RepeatButton />
     </>
   );
 }
@@ -241,11 +254,27 @@ function NowPlayingSheet() {
             <p className="mt-1 text-sm text-muted">Senhor Lakes</p>
           </div>
           <Scrubber />
-          <div className="flex items-center gap-6">
-            <ModeButtons />
+          {/* As duas colunas laterais têm a mesma largura (1fr), então o
+              play fica no centro exato da tela mesmo quando o volume não
+              aparece. No celular o repetir migra para a direita: assim a
+              linha fica simétrica e aproveita a largura toda. */}
+          <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2">
+            <div className="flex items-center gap-2 justify-self-start">
+              <ShuffleButton />
+              <span className="hidden lg:block">
+                <RepeatButton />
+              </span>
+            </div>
+
             <TransportButtons size="lg" />
-            <div className="hidden lg:flex">
-              <VolumeControl />
+
+            <div className="flex items-center justify-self-end">
+              <span className="lg:hidden">
+                <RepeatButton />
+              </span>
+              <span className="hidden lg:flex">
+                <VolumeControl />
+              </span>
             </div>
           </div>
         </div>

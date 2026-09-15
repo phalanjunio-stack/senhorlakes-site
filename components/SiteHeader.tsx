@@ -50,7 +50,14 @@ export default function SiteHeader() {
     >
       <div className="page-width flex h-20 items-center justify-between gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label={`${band.name} — início`}>
-          <Image src="/img/logo.png" alt="" width={44} height={53} className="h-11 w-auto" priority />
+          <Image
+            src="/img/logo.png"
+            alt=""
+            width={54}
+            height={64}
+            className="logo-breathe h-14 w-auto lg:h-16"
+            priority
+          />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">

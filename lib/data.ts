@@ -113,11 +113,11 @@ export const tracks: Track[] = [
 
 export const albums: Album[] = [
   {
-    slug: "ao-vivo-sessao-1",
-    title: "Ao Vivo — Sessão 1",
+    slug: "desde-sempre",
+    title: "Desde Sempre",
     kind: "Álbum",
     year: 2026,
-    artwork: null,
+    artwork: "/img/desde-sempre.webp",
     accent: "#9fc3bd",
     description:
       "As gravações que abriram a estrada da banda. Onze faixas registradas do jeito que soam no palco.",

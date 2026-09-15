@@ -31,7 +31,7 @@
   --color-olive: #48483c;
   --color-charcoal: #45443f;
 
-  --font-display: var(--font-archivo), "Arial Narrow", Impact, sans-serif;
+  --font-display: var(--font-oswald), "Arial Narrow", Impact, sans-serif;
   --font-sans: var(--font-inter), "Segoe UI", Arial, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -294,6 +294,32 @@ a {
    Glow das faíscas e cursor próprio, portados do painel da
    Contourline e do site original do Senhor Lakes.
    ────────────────────────────────────────────────────────── */
+
+/* A logo respira devagar: sobe e desce alguns pixels com uma inclinação
+   mínima. O ciclo é longo (9s) de propósito — o olho percebe que a peça
+   está viva sem que o movimento dispute atenção com o menu ao lado.
+   Só roda com o movimento ligado, como todo o resto desta camada. */
+.logo-breathe {
+  transform-origin: 50% 70%;
+}
+
+.motion-on .logo-breathe {
+  animation: logo-breathe 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes logo-breathe {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  32% {
+    transform: translateY(-3px) rotate(-1.5deg) scale(1.025);
+  }
+  68% {
+    transform: translateY(2px) rotate(1.3deg) scale(0.995);
+  }
+}
 
 /* Quando o movimento está desligado, nada aqui anima. */
 .motion-on .tilt {

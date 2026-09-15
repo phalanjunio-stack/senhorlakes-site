@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Inter } from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -10,10 +10,12 @@ import FxControls from "@/components/fx/FxControls";
 import { band, members } from "@/lib/data";
 import { asset, siteUrl } from "@/lib/site";
 
-const archivo = Archivo({
+/* Oswald vai até 700 (não tem 800). Onde o CSS pede font-weight 800 o
+   navegador usa o topo da faixa — como é fonte variável, sai limpo. */
+const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-archivo",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-oswald",
   display: "swap",
 });
 
@@ -72,7 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="pt-BR" className={`${archivo.variable} ${inter.variable}`}>
+    <html lang="pt-BR" className={`${oswald.variable} ${inter.variable}`}>
       <body className="antialiased">
         <script
           type="application/ld+json"
