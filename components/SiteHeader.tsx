@@ -44,8 +44,17 @@ export default function SiteHeader() {
 
   return (
     <header
+      /* A barra escura ao rolar só aparece a partir do desktop: no celular
+         a logo e o botão de menu já se leem sozinhos sobre o fundo escuro
+         do site, e a barra virava uma faixa atravessada no meio da arte.
+         Com o menu aberto ela volta em qualquer tamanho — sem ela os
+         itens do menu ficariam por cima do conteúdo, ilegíveis. */
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
-        scrolled || open ? "border-b border-[var(--line)] bg-ink/85 backdrop-blur-md" : ""
+        open
+          ? "border-b border-[var(--line)] bg-ink/85 backdrop-blur-md"
+          : scrolled
+            ? "lg:border-b lg:border-[var(--line)] lg:bg-ink/85 lg:backdrop-blur-md"
+            : ""
       }`}
     >
       {/* No celular a logo fica centralizada e maior: sem o título escrito
