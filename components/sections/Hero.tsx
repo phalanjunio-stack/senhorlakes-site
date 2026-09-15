@@ -135,14 +135,24 @@ export default function Hero() {
           transform: "translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 7px), 0)",
         }}
       >
-        <Reveal>
+        {/* Some no celular pelo mesmo motivo do título: nessa largura a
+            linha cai bem na altura do queixo dos integrantes. */}
+        <Reveal className="hidden md:block">
           <p className="eyebrow">Pop rock • ao vivo</p>
         </Reveal>
 
         <h1 id="hero-title" className="mt-4">
           <span className="sr-only">Senhor Lakes</span>
           <Reveal delay={80}>
-            <span aria-hidden className="hero-title font-display block font-extrabold uppercase">
+            {/* Some no celular: ali ele caía em cima do rosto de um dos
+                integrantes, e a arte com a logo do cabeçalho já dizem de
+                quem é a página. O <span> sr-only acima continua sendo o
+                h1 de verdade, então busca e leitor de tela não perdem
+                nada. */}
+            <span
+              aria-hidden
+              className="hero-title font-display hidden font-extrabold uppercase md:block"
+            >
               <span className="block">Sen</span>
               <span className="ml-[0.28em] block">Hor</span>
               {/* sálvia, como a palavra LAKES na logo */}

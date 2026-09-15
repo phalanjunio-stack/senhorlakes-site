@@ -330,8 +330,19 @@ a {
    precisar de um véu pesado por cima da banda. */
 @media (max-width: 767px) {
   .hero-art {
-    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 28%);
-    mask-image: linear-gradient(to top, transparent 0%, #000 28%);
+    /* Paradas intermediárias em vez de uma rampa reta: a opacidade linear
+       sobe rápido demais no começo e deixa uma borda visível justo onde o
+       desbote nasce. Esta curva começa devagar e só fecha lá em cima. */
+    --hero-fade: linear-gradient(
+      to top,
+      transparent 0%,
+      rgba(0, 0, 0, 0.22) 8%,
+      rgba(0, 0, 0, 0.58) 17%,
+      rgba(0, 0, 0, 0.86) 26%,
+      #000 38%
+    );
+    -webkit-mask-image: var(--hero-fade);
+    mask-image: var(--hero-fade);
   }
 }
 

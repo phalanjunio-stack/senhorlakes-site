@@ -85,7 +85,7 @@ export default function FxControls() {
             snd.burst();
             toggleSound();
           }}
-          className={`${button} ${sound ? "text-accent" : "text-muted"}`}
+          className={`${button} ${sound ? "text-accent" : "text-muted"} hidden md:grid`}
           aria-pressed={sound}
           aria-label={sound ? "Desligar efeitos sonoros" : "Ligar efeitos sonoros"}
           title={sound ? "Som: ligado" : "Som: desligado"}
@@ -95,10 +95,11 @@ export default function FxControls() {
           {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
         </button>
 
-        {/* Só no desktop. Num celular o movimento já nasce desligado (não
-            há ponteiro para mover nada) e a arte já aparece colorida, com
-            a lupa perdendo a máscara em telas de toque — o botão só
-            oferecia uma opção que ali não muda quase nada. */}
+        {/* Os dois botões só existem no desktop. O movimento já nasce
+            desligado no celular (não há ponteiro para mover nada) e a arte
+            já vem colorida, com a lupa perdendo a máscara em telas de
+            toque. E o som é um detalhe de quem navega com mouse: no
+            telefone a pessoa já tem o botão de volume na lateral. */}
         <button
           type="button"
           onClick={() => {
