@@ -51,6 +51,9 @@ export type Member = {
   /** posição do recorte na foto de grupo, enquanto não houver retrato individual */
   framePosition: string;
   photo?: string;
+  /** história pessoal — abre num modal ao clicar no card. Mesmas regras
+      de formatação das histórias (ver components/Prose.tsx) */
+  story?: string;
 };
 
 export type GigEvent = {

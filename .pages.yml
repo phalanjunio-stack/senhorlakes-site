@@ -296,6 +296,14 @@ content:
             label: Retrato individual
             type: image
             description: Se preencher, a posição na foto de grupo deixa de ser usada.
+          - name: story
+            label: História
+            type: text
+            description: >-
+              Opcional. Quem tem história ganha um "Ler a história" no card, que
+              abre num quadro por cima da página. Mesmas regras do texto das
+              histórias: linha em branco separa parágrafos, **destaca um trecho**
+              e > vira citação.
 
   - name: banda
     label: Banda e contato
