@@ -68,6 +68,26 @@ espremida ou esticada no lugar dela na grade.
 As entradas sem foto são espaços reservados, só para enxergar o layout. Apague
 conforme for subindo as fotos de verdade.
 
+**Pode mandar a foto pesada.** O site não redimensiona imagem em tempo real —
+não tem servidor para isso, e o `lib/imageLoader.ts` só conserta o caminho do
+arquivo. Então a compressão acontece na hora de publicar: o
+[`scripts/otimizar-imagens.mjs`](scripts/otimizar-imagens.mjs) roda no fim do
+`npm run build` e reescreve tudo que está em `out/`.
+
+| | |
+| --- | --- |
+| No repositório | o original, em qualidade cheia |
+| No ar | no máximo 2000x2600, recomprimido |
+| Logo e desenhos com transparência | no máximo 800px, em paleta |
+
+Hoje isso corta as imagens do site de 1,9MB para 1MB — só a logo, que carrega
+em toda página, cai de 320KB para 62KB.
+
+A compressão parte sempre de `public/`, nunca de `out/`. Se partisse da versão
+já comprimida, cada build comeria um pedaço da qualidade da anterior.
+
+O nome do arquivo nunca muda, então nada no conteúdo precisa ser ajustado.
+
 ### Escrever uma história
 
 No painel, seção **Histórias**. É a página `/historias`, e cada história tem
