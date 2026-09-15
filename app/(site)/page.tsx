@@ -22,7 +22,12 @@ export default function Home() {
     location: {
       "@type": "Place",
       name: event.venue,
-      address: { "@type": "PostalAddress", addressLocality: event.city, addressCountry: "BR" },
+      address: {
+        "@type": "PostalAddress",
+        ...(event.address ? { streetAddress: event.address } : {}),
+        addressLocality: event.city,
+        addressCountry: "BR",
+      },
     },
   }));
 

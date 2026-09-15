@@ -75,6 +75,12 @@ export default function Agenda() {
                     <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
                       <MapPin size={13} className="text-accent" /> {event.venue}
                     </p>
+                    {/* O endereço vem em letra menor e sem ícone: quem lê a
+                        agenda está decidindo se vai, não procurando a rua
+                        ainda. Ele existe para quem já decidiu. */}
+                    {event.address && (
+                      <p className="mt-1 pl-[1.15rem] text-xs text-muted/70">{event.address}</p>
+                    )}
                   </div>
 
                   <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-5 py-2.5 font-display text-xs font-semibold tracking-[0.18em] text-muted uppercase transition duration-300 group-hover:border-gold group-hover:text-gold">

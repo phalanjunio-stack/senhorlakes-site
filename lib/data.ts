@@ -76,8 +76,12 @@ export type Member = {
 
 export type GigEvent = {
   date: string; // AAAA-MM-DD
+  /** só cidade e estado — é o que o Google lê como o lugar do show */
   city: string;
+  /** nome da casa, sem endereço */
   venue: string;
+  /** rua, número e bairro; opcional */
+  address?: string;
   url?: string;
 };
 

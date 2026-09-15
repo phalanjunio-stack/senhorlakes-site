@@ -2,8 +2,9 @@
   "events": [
     {
       "date": "2026-09-19",
-      "city": "Emporio Matuto Cachaçaria",
-      "venue": "R. Ervália, 819, Iporanga  -  Sete Lagoas/MG"
+      "city": "Sete Lagoas, MG",
+      "venue": "Emporio Matuto Cachaçaria",
+      "address": "R. Ervália, 819 — Iporanga"
     }
   ]
 }

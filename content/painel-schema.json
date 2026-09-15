@@ -43,14 +43,20 @@
             "label": "Cidade e estado",
             "type": "string",
             "required": true,
-            "description": "Exemplo: Sete Lagoas, MG"
+            "description": "Só a cidade e o estado, nada mais. É o que aparece em letra grande na agenda e o que o Google usa para saber onde a banda toca. Exemplo: Sete Lagoas, MG"
           },
           {
             "name": "venue",
-            "label": "Local",
+            "label": "Nome do lugar",
             "type": "string",
             "required": true,
-            "description": "Nome da casa de show"
+            "description": "Só o nome da casa, sem endereço. Exemplo: Emporio Matuto Cachaçaria"
+          },
+          {
+            "name": "address",
+            "label": "Endereço",
+            "type": "string",
+            "description": "Opcional. Rua, número e bairro. Exemplo: R. Ervália, 819 — Iporanga"
           },
           {
             "name": "url",
