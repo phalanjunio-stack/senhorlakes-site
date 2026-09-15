@@ -321,6 +321,23 @@ a {
   }
 }
 
+/* Seta do hero: um empurrãozinho para baixo, não um pulo para cima —
+   o gesto aponta para onde a página continua. Portada da galeria da
+   Contourline, com a mesma regra de movimento do resto daqui. */
+.motion-on .scroll-cue {
+  animation: scroll-cue 1.9s ease-in-out infinite;
+}
+
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
 /* Quando o movimento está desligado, nada aqui anima. */
 .motion-on .tilt {
   transition: transform 420ms var(--ease-out-expo);

@@ -1,21 +1,25 @@
 name: Publicar no GitHub Pages
 
+# Todo push no main reconstrói o site e publica. É isso que faz o painel
+# de administração valer a pena: você salva lá, vira um commit aqui, e
+# em ~2 minutos está no ar sem ninguém rodar nada na mão.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+# Precisa escrever porque o build é empurrado para o branch gh-pages,
+# que é de onde este repositório publica.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
+# Dois pushes seguidos não disputam o mesmo branch.
 concurrency:
-  group: pages
+  group: gh-pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  publicar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,20 +38,20 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: npm run build
 
-      # Impede o Jekyll de ignorar as pastas que começam com _
+      # Sem este arquivo o GitHub Pages trata o build como site Jekyll e
+      # ignora a pasta _next/, derrubando todo o CSS e o JavaScript.
       - run: touch out/.nojekyll
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      # O gh-pages guarda só o build mais recente: é resultado, não
+      # histórico — o que importa fica versionado no main.
+      - name: Publicar no branch gh-pages
+        working-directory: out
+        run: |
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Build de ${{ github.sha }}"
+          git push -q --force \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            HEAD:gh-pages

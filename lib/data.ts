@@ -135,26 +135,6 @@ export const albums: Album[] = [
       "sua-maneira",
     ],
   },
-  {
-    slug: "para-cantar-junto",
-    title: "Para Cantar Junto",
-    kind: "Playlist",
-    year: 2026,
-    artwork: null,
-    accent: "#c9a227",
-    description: "O bloco do show em que ninguém fica parado.",
-    trackSlugs: ["sua-maneira", "meu-erro", "so-hoje", "carla", "pescador"],
-  },
-  {
-    slug: "final-da-noite",
-    title: "Final da Noite",
-    kind: "Playlist",
-    year: 2026,
-    artwork: null,
-    accent: "#6d8f89",
-    description: "Quando a casa esvazia e sobram as canções lentas.",
-    trackSlugs: ["segredo", "olhos-certos", "dias-atras", "eu-que-nao-amo-voce", "so-por-meu-prazer"],
-  },
 ];
 
 /* ── AGENDA ────────────────────────────────────────────── */

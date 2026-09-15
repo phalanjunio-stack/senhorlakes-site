@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Play } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Play } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import Glow, { useRipple } from "@/components/fx/Glow";
 import { useFx } from "@/components/fx/FxProvider";
@@ -189,6 +189,24 @@ export default function Hero() {
           </nav>
         </Reveal>
       </div>
+
+      {/* Indicação de que a página continua. É um link de verdade para
+          #banda: funciona sem JavaScript e pega a rolagem suave que o
+          globals.css já aplica. O rótulo só aparece no hover para não
+          disputar espaço com as redes sociais logo acima. */}
+      <a
+        href="#banda"
+        onClick={() => play("navigate")}
+        aria-label="Rolar para a seção A Banda"
+        className="group absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1.5 sm:flex"
+      >
+        <span className="font-display text-[10px] font-semibold tracking-[0.2em] text-paper/60 uppercase opacity-0 transition-opacity group-hover:opacity-100">
+          Veja mais
+        </span>
+        <span className="scroll-cue grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 backdrop-blur-sm transition group-hover:border-accent group-hover:bg-white/20">
+          <ChevronDown size={20} className="text-paper/85 transition group-hover:text-accent" />
+        </span>
+      </a>
     </section>
   );
 }
