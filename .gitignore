@@ -32,6 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# O endereço público do site não é segredo, e precisa viajar com o código:
+# sem ele a Cloudflare publica com o canonical apontando para um domínio
+# que ainda não existe.
+!.env.production
 
 # vercel
 .vercel

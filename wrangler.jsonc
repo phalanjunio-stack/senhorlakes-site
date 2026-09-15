@@ -21,6 +21,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "senhorlakes-site",
   "compatibility_date": "2026-09-15",
+
+  // Cada versão publicada ganharia um endereço público próprio, e o
+  // Google trataria cada um como uma cópia do site competindo com o
+  // original. Um site só, um endereço só.
+  "preview_urls": false,
+  "workers_dev": true,
+
   "assets": {
     "directory": "./out",
     // O build gera 404.html; sem isto um endereço errado devolve uma
