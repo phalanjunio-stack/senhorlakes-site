@@ -1,0 +1,30 @@
+/**
+ * Como a Cloudflare publica este site.
+ *
+ * Sem este arquivo ela olha o projeto, vê "Next.js", e conclui sozinha
+ * que é um site que roda no servidor — dispara uma conversão automática
+ * (OpenNext) e vai procurar `.next/standalone`, que não existe aqui.
+ * O build quebra no fim, depois de tudo ter dado certo.
+ *
+ * Este site é `output: "export"`: o `npm run build` cospe páginas HTML
+ * prontas em `out/`. Não há servidor para converter. Declarando os
+ * arquivos estáticos aqui, ela para de adivinhar e só publica a pasta.
+ *
+ * Servir arquivo parado é o que este site precisa hoje, mas não é o
+ * teto: o painel em /admin vai precisar de código rodando para receber
+ * o login e gravar o conteúdo. Quando chegar a hora, entra um "main"
+ * aqui apontando para esse código — o Worker atende /api e entrega os
+ * arquivos estáticos no resto. É por isso que vale estar em Workers e
+ * não no Pages clássico.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "senhorlakes-site",
+  "compatibility_date": "2026-09-15",
+  "assets": {
+    "directory": "./out",
+    // O build gera 404.html; sem isto um endereço errado devolve uma
+    // página em branco em vez do 404 do site.
+    "not_found_handling": "404-page"
+  }
+}
