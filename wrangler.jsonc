@@ -32,6 +32,23 @@
   // arquivos prontos sem nem acordar este código.
   "main": "worker/index.ts",
 
+  /**
+   * Valores que não são segredo ficam aqui, e não no painel da
+   * Cloudflare, por um motivo prático: cada publicação sobrescreve a
+   * configuração remota com esta daqui, e variável que só existia lá é
+   * apagada sem avisar. Já aconteceu duas vezes — com o endereço do
+   * site e com estes dois.
+   *
+   * Os dois são públicos de qualquer jeito: o e-mail está no rodapé do
+   * site e o repositório é aberto. O que é segredo de verdade
+   * (ADMIN_SENHA_HASH, SESSAO_SEGREDO, GITHUB_TOKEN) entra como Secret
+   * no painel, e Secret o deploy não apaga.
+   */
+  "vars": {
+    "ADMIN_EMAIL": "phalanjunio@gmail.com",
+    "GITHUB_REPO": "phalanjunio-stack/senhorlakes-site"
+  },
+
   "assets": {
     "directory": "./out",
     // Só estes endereços passam pelo código; o resto é arquivo estático
