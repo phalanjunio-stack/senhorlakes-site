@@ -234,6 +234,53 @@ async function gravarArquivo(caminho: string, dados: unknown, versao: string | n
   });
 }
 
+/* ── Imagens ───────────────────────────────────────────── */
+
+/** "Foto do Show — Sete Lagoas.JPG" vira "foto-do-show-sete-lagoas.jpg". */
+function nomeLimpo(original: string): string {
+  const ponto = original.lastIndexOf(".");
+  const extensao = (ponto > 0 ? original.slice(ponto + 1) : "jpg").toLowerCase();
+  const base = (ponto > 0 ? original.slice(0, ponto) : original)
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")   // tira acento
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+  return `${base || "foto"}.${extensao}`;
+}
+
+/** Já existe um arquivo com esse nome? */
+async function existe(caminho: string, env: Env): Promise<boolean> {
+  const url = `https://api.github.com/repos/${env.GITHUB_REPO}/contents/${caminho}?ref=${RAMO}`;
+  const resposta = await fetch(url, { headers: cabecalhosGitHub(env) });
+  return resposta.ok;
+}
+
+/**
+ * Acha um nome livre em public/img.
+ *
+ * Sem isto, subir uma foto com nome repetido sobrescreveria a antiga
+ * sem avisar — e a antiga pode estar sendo usada em outra parte do site.
+ */
+async function nomeLivre(nome: string, env: Env): Promise<string> {
+  const ponto = nome.lastIndexOf(".");
+  const base = nome.slice(0, ponto);
+  const extensao = nome.slice(ponto);
+
+  for (let tentativa = 1; tentativa <= 20; tentativa += 1) {
+    const candidato = tentativa === 1 ? nome : `${base}-${tentativa}${extensao}`;
+    if (!(await existe(`public/img/${candidato}`, env))) return candidato;
+  }
+  /* Vinte nomes ocupados é sinal de outra coisa errada; o relógio
+     garante um nome livre em vez de devolver erro para quem só queria
+     subir uma foto. */
+  return `${base}-${Date.now().toString(36)}${extensao}`;
+}
+
+const TIPOS_DE_IMAGEM = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+const TAMANHO_MAXIMO = 12 * 1024 * 1024;
+
 /* ── Respostas ─────────────────────────────────────────── */
 
 const json = (corpo: unknown, inicio: ResponseInit = {}) =>
@@ -311,6 +358,41 @@ async function atender(pedido: Request, env: Env): Promise<Response> {
 
     /* Daqui para baixo, só quem entrou */
     if (!entrou) return json({ erro: "fora" }, { status: 401 });
+
+    if (rota === "/api/imagem" && pedido.method === "POST") {
+      const tipo = pedido.headers.get("content-type") ?? "";
+      if (!TIPOS_DE_IMAGEM.has(tipo)) {
+        return json({ erro: "só aceito imagem (jpg, png, webp ou avif)" }, { status: 415 });
+      }
+
+      const bytes = new Uint8Array(await pedido.arrayBuffer());
+      if (bytes.length === 0) return json({ erro: "arquivo vazio" }, { status: 400 });
+      if (bytes.length > TAMANHO_MAXIMO) {
+        return json({ erro: "imagem grande demais" }, { status: 413 });
+      }
+
+      const pedido_nome = url.searchParams.get("nome") ?? "foto.jpg";
+      const nome = await nomeLivre(nomeLimpo(pedido_nome), env);
+
+      const resposta = await fetch(
+        `https://api.github.com/repos/${env.GITHUB_REPO}/contents/public/img/${nome}`,
+        {
+          method: "PUT",
+          headers: { ...cabecalhosGitHub(env), "content-type": "application/json" },
+          body: JSON.stringify({
+            message: `Foto ${nome} (pelo painel)`,
+            content: bytesParaBase64(bytes),
+            branch: RAMO,
+            committer: { name: "Painel Sr. Lakes", email: env.ADMIN_EMAIL },
+          }),
+        },
+      );
+      if (!resposta.ok) return json({ erro: "não consegui guardar a imagem" }, { status: 502 });
+
+      /* O caminho que volta é o que o site usa — /img/nome, sem o
+         "public", que só existe na organização do repositório. */
+      return json({ ok: true, caminho: `/img/${nome}` });
+    }
 
     const conteudo = rota.match(/^\/api\/conteudo\/([\w-]+)$/);
     if (conteudo) {

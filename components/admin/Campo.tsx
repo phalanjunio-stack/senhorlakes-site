@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
+import CampoImagem from "./CampoImagem";
 import { opcoes, resumo, type CampoSchema, type Registro, type Valor } from "./tipos";
 
 /* ──────────────────────────────────────────────────────────
@@ -40,6 +41,10 @@ function CampoSimples({
   aoMudar: (v: Valor) => void;
 }) {
   const texto = typeof valor === "string" || typeof valor === "number" ? String(valor) : "";
+
+  if (campo.type === "image") {
+    return <CampoImagem valor={valor} aoMudar={aoMudar} />;
+  }
 
   if (campo.type === "text") {
     /* História e biografia são textos longos de verdade; os outros
