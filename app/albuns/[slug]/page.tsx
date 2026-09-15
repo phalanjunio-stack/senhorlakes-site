@@ -63,12 +63,22 @@ export default async function AlbumPage({ params }: Params) {
       />
 
       <div className="page-width relative">
-        <Link
-          href="/albuns"
-          className="inline-flex items-center gap-1 text-sm text-muted transition hover:text-paper"
-        >
-          <ChevronLeft size={16} /> Álbuns
-        </Link>
+        {/* Trilha com os dois destinos. Só "Álbuns" deixava quem chegou
+            pela home (seção "Ouça a banda") sem caminho de volta: voltar
+            caía na biblioteca, que é outra tela de capas, e a home só
+            existia dentro do menu. */}
+        <nav aria-label="Você está em" className="flex items-center gap-2 text-sm text-muted">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1 transition hover:text-paper"
+          >
+            <ChevronLeft size={16} /> Início
+          </Link>
+          <span aria-hidden>/</span>
+          <Link href="/albuns" className="transition hover:text-paper">
+            Álbuns
+          </Link>
+        </nav>
 
         <header className="mt-8 flex flex-col gap-8 md:flex-row md:items-end">
           <AlbumArt
