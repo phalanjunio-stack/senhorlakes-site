@@ -47,11 +47,19 @@ export default function SiteHeader() {
       /* A barra escura ao rolar só aparece a partir do desktop: no celular
          a logo e o botão de menu já se leem sozinhos sobre o fundo escuro
          do site, e a barra virava uma faixa atravessada no meio da arte.
+
          Com o menu aberto ela volta em qualquer tamanho — sem ela os
-         itens do menu ficariam por cima do conteúdo, ilegíveis. */
+         itens do menu ficariam por cima do conteúdo, ilegíveis. No celular
+         vai além e toma a tela inteira (`bottom-0`), senão o painel
+         terminava logo depois de "Contato" e o conteúdo da página
+         reaparecia embaixo, como se o menu não tivesse fechado o quadro.
+         Uso `bottom-0` e não uma altura fixa porque a barra de endereço do
+         navegador móvel aparece e some: o elemento fixo acompanha sozinho.
+         A borda de baixo só faz sentido no desktop; em tela cheia ela cairia
+         rente ao fim da tela. */
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
         open
-          ? "border-b border-[var(--line)] bg-ink/85 backdrop-blur-md"
+          ? "bottom-0 flex flex-col bg-ink/85 backdrop-blur-md lg:bottom-auto lg:block lg:border-b lg:border-[var(--line)]"
           : scrolled
             ? "lg:border-b lg:border-[var(--line)] lg:bg-ink/85 lg:backdrop-blur-md"
             : ""
@@ -63,7 +71,7 @@ export default function SiteHeader() {
           centro é o da tela — e não o do espaço que sobra ao lado do
           botão de menu. No desktop nada muda: continua à esquerda, na
           linha do menu. */}
-      <div className="page-width relative flex h-20 items-center justify-between gap-6 lg:h-20">
+      <div className="page-width relative flex h-20 shrink-0 items-center justify-between gap-6 lg:h-20">
         <Link
           href="/"
           className="absolute left-1/2 flex shrink-0 -translate-x-1/2 items-center gap-3 lg:static lg:translate-x-0"
@@ -115,10 +123,16 @@ export default function SiteHeader() {
         </button>
       </div>
 
+      {/* `flex-1` faz a lista ocupar o que sobra da tela; `overflow-y-auto`
+          é o seguro para o celular deitado, onde os sete itens não cabem
+          de uma vez. O respiro de baixo cresce com a barra do player, que
+          fica por cima do menu agora que ele vai até o fim da tela —
+          `--player-h` é 0 quando não há música tocando, então em repouso
+          isso é o mesmo `pb-8` de antes. */}
       {open && (
         <nav
           id="menu-mobile"
-          className="page-width flex flex-col gap-1 pb-8 lg:hidden"
+          className="page-width flex flex-1 flex-col gap-1 overflow-y-auto pb-[calc(var(--player-h)+2rem)] lg:hidden"
           aria-label="Navegação principal"
         >
           {links.map((link) => (
