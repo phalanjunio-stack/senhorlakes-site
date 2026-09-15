@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { LogOut, LoaderCircle } from "lucide-react";
+import EditorSecao from "@/components/admin/EditorSecao";
+import type { SecaoSchema } from "@/components/admin/tipos";
+import schemaJson from "@/content/painel-schema.json";
 
 /* ──────────────────────────────────────────────────────────
    PAINEL
@@ -19,23 +22,14 @@ import { LogOut, LoaderCircle } from "lucide-react";
 
 type Estado = "verificando" | "fora" | "dentro";
 
-const SECOES = [
-  { chave: "shows", nome: "Agenda de shows" },
-  { chave: "fotos", nome: "Galeria de fotos" },
-  { chave: "historias", nome: "Histórias" },
-  { chave: "videos", nome: "Vídeos" },
-  { chave: "albuns", nome: "Álbuns e playlists" },
-  { chave: "faixas", nome: "Músicas" },
-  { chave: "integrantes", nome: "Integrantes" },
-  { chave: "banda", nome: "Banda e contato" },
-  { chave: "config", nome: "Configurações do site" },
-];
+const SECOES = schemaJson as unknown as SecaoSchema[];
 
 export default function PainelPage() {
   const [estado, setEstado] = useState<Estado>("verificando");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const [aberta, setAberta] = useState<SecaoSchema | null>(null);
   const [enviando, setEnviando] = useState(false);
 
   /* Pergunta ao servidor se o cookie desta pessoa ainda vale. Enquanto
@@ -82,6 +76,7 @@ export default function PainelPage() {
 
   const sair = useCallback(async () => {
     await fetch("/api/sair", { method: "POST", credentials: "same-origin" }).catch(() => {});
+    setAberta(null);
     setEstado("fora");
   }, []);
 
@@ -156,6 +151,10 @@ export default function PainelPage() {
     );
   }
 
+  if (aberta) {
+    return <EditorSecao secao={aberta} aoVoltar={() => setAberta(null)} />;
+  }
+
   return (
     <main className="page-width py-12">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--line)] pb-6">
@@ -179,6 +178,7 @@ export default function PainelPage() {
           <li key={secao.chave}>
             <button
               type="button"
+              onClick={() => setAberta(secao)}
               className="font-display w-full rounded-xl border border-[var(--line)] bg-graphite px-5 py-6 text-left text-lg font-bold tracking-tight text-paper uppercase transition hover:border-accent hover:text-accent"
             >
               {secao.nome}
