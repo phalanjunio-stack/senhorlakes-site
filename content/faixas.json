@@ -1,0 +1,70 @@
+{
+  "tracks": [
+    {
+      "slug": "carla",
+      "title": "Carla",
+      "duration": 235,
+      "src": "/audio/carla.mp3"
+    },
+    {
+      "slug": "dias-atras",
+      "title": "Dias Atrás",
+      "duration": 253,
+      "src": "/audio/dias-atras.mp3"
+    },
+    {
+      "slug": "eu-que-nao-amo-voce",
+      "title": "Eu Que Não Amo Você",
+      "duration": 276,
+      "src": "/audio/eu-que-nao-amo-voce.mp3"
+    },
+    {
+      "slug": "meu-erro",
+      "title": "Meu Erro",
+      "duration": 221,
+      "src": "/audio/meu-erro.mp3"
+    },
+    {
+      "slug": "olhos-certos",
+      "title": "Olhos Certos",
+      "duration": 233,
+      "src": "/audio/olhos-certos.mp3"
+    },
+    {
+      "slug": "pescador",
+      "title": "Pescador",
+      "duration": 304,
+      "src": "/audio/pescador.mp3"
+    },
+    {
+      "slug": "segredo",
+      "title": "Segredo",
+      "duration": 196,
+      "src": "/audio/segredo.mp3"
+    },
+    {
+      "slug": "sem-radar",
+      "title": "Sem Radar",
+      "duration": 239,
+      "src": "/audio/sem-radar.mp3"
+    },
+    {
+      "slug": "so-hoje",
+      "title": "Só Hoje",
+      "duration": 320,
+      "src": "/audio/so-hoje.mp3"
+    },
+    {
+      "slug": "so-por-meu-prazer",
+      "title": "Só Por Meu Prazer",
+      "duration": 208,
+      "src": "/audio/so-por-meu-prazer.mp3"
+    },
+    {
+      "slug": "sua-maneira",
+      "title": "Sua Maneira",
+      "duration": 203,
+      "src": "/audio/sua-maneira.mp3"
+    }
+  ]
+}

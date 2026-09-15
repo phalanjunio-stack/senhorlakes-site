@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "date": "2026-09-14",
+      "city": "Sete Lagoas, MG",
+      "venue": "Santa Fé Music Bar"
+    },
+    {
+      "date": "2026-09-21",
+      "city": "Belo Horizonte, MG",
+      "venue": "Mister Rock"
+    },
+    {
+      "date": "2026-09-28",
+      "city": "Divinópolis, MG",
+      "venue": "Garagem 55"
+    }
+  ]
+}

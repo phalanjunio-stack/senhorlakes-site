@@ -1,0 +1,287 @@
+# Painel de administração (Pages CMS).
+#
+# Este arquivo descreve os formulários que aparecem em app.pagescms.org.
+# Cada bloco abaixo vira uma seção no menu do painel, e cada campo vira
+# um campo do formulário.
+#
+# O que você salva no painel vira um commit neste repositório; o GitHub
+# Actions reconstrói o site e publica em ~2 minutos.
+
+# Fotos enviadas pelo painel caem em public/img e são gravadas no
+# conteúdo como /img/arquivo.jpg — que é como o site as referencia.
+media:
+  input: public/img
+  output: /img
+
+content:
+  - name: shows
+    label: Agenda de shows
+    type: file
+    path: content/shows.json
+    format: json
+    fields:
+      - name: events
+        label: Shows
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: Data
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: city
+            label: Cidade e estado
+            type: string
+            required: true
+            description: "Exemplo: Sete Lagoas, MG"
+          - name: venue
+            label: Local
+            type: string
+            required: true
+            description: Nome da casa de show
+          - name: url
+            label: Link de detalhes
+            type: string
+            description: Opcional — evento no Instagram, venda de ingresso, etc.
+
+  - name: fotos
+    label: Galeria de fotos
+    type: file
+    path: content/fotos.json
+    format: json
+    fields:
+      - name: photos
+        label: Fotos
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Identificador
+            type: string
+            required: true
+            description: Qualquer código único e curto — p11, p12, show-bh…
+          - name: src
+            label: Foto
+            type: image
+          - name: alt
+            label: Descrição da foto
+            type: string
+            required: true
+            description: Para quem não enxerga a imagem. "A banda tocando no palco."
+          - name: category
+            label: Categoria
+            type: select
+            required: true
+            options:
+              values:
+                - { value: shows, label: Shows }
+                - { value: bastidores, label: Bastidores }
+                - { value: retratos, label: Retratos }
+                - { value: estrada, label: Estrada }
+          - name: caption
+            label: Legenda
+            type: string
+          - name: ratio
+            label: Formato da foto
+            type: select
+            required: true
+            description: Define a altura dela no mosaico da galeria.
+            options:
+              values:
+                - { value: "1.5", label: "Deitada (3:2)" }
+                - { value: "0.6667", label: "Em pé (2:3)" }
+                - { value: "1", label: "Quadrada (1:1)" }
+                - { value: "1.7778", label: "Panorâmica (16:9)" }
+                - { value: "0.8", label: "Em pé suave (4:5)" }
+
+  - name: videos
+    label: Vídeos
+    type: file
+    path: content/videos.json
+    format: json
+    fields:
+      - name: videos
+        label: Vídeos
+        type: object
+        list: true
+        fields:
+          - name: youtubeId
+            label: Código do vídeo no YouTube
+            type: string
+            required: true
+            description: "Só o trecho depois de watch?v= — exemplo: dQw4w9WgXcQ"
+          - name: title
+            label: Título
+            type: string
+            required: true
+          - name: description
+            label: Descrição
+            type: string
+
+  - name: albuns
+    label: Álbuns e playlists
+    type: file
+    path: content/albuns.json
+    format: json
+    fields:
+      - name: albums
+        label: Álbuns
+        type: object
+        list: true
+        fields:
+          - name: slug
+            label: Endereço
+            type: string
+            required: true
+            description: Vira o link do álbum. Só minúsculas e hífens — desde-sempre.
+          - name: title
+            label: Título
+            type: string
+            required: true
+          - name: kind
+            label: Tipo
+            type: select
+            required: true
+            options:
+              values: [Álbum, EP, Single, Playlist]
+          - name: year
+            label: Ano
+            type: number
+            required: true
+          - name: artwork
+            label: Capa
+            type: image
+            description: Imagem quadrada. Deixe vazio para o site desenhar uma capa.
+          - name: accent
+            label: Cor
+            type: string
+            required: true
+            description: "Em hexadecimal, com # na frente. Usada na capa desenhada e no fundo da página."
+          - name: description
+            label: Descrição
+            type: text
+            required: true
+          - name: trackSlugs
+            label: Faixas
+            type: string
+            list: true
+            required: true
+            description: Os códigos das músicas, na ordem. Veja os códigos em Músicas.
+
+  - name: faixas
+    label: Músicas
+    type: file
+    path: content/faixas.json
+    format: json
+    fields:
+      - name: tracks
+        label: Músicas
+        type: object
+        list: true
+        fields:
+          - name: slug
+            label: Código
+            type: string
+            required: true
+            description: Só minúsculas e hífens. É o que você cita na lista de faixas do álbum.
+          - name: title
+            label: Título
+            type: string
+            required: true
+          - name: duration
+            label: Duração em segundos
+            type: number
+            required: true
+            description: "3:55 são 235 segundos."
+          - name: src
+            label: Arquivo
+            type: string
+            required: true
+            description: "Caminho do MP3 dentro de public/audio — exemplo: /audio/carla.mp3"
+          - name: cover
+            label: Autoria original
+            type: string
+            description: Preencha só se a música for de outro artista.
+
+  - name: integrantes
+    label: Integrantes
+    type: file
+    path: content/integrantes.json
+    format: json
+    fields:
+      - name: members
+        label: Integrantes
+        type: object
+        list: true
+        fields:
+          - name: name
+            label: Nome
+            type: string
+            required: true
+          - name: role
+            label: Função
+            type: string
+            required: true
+            description: "Exemplo: Voz / guitarra"
+          - name: framePosition
+            label: Posição na foto de grupo
+            type: string
+            required: true
+            description: Da esquerda para a direita — 5%, 27%, 49%, 70%, 92%.
+          - name: photo
+            label: Retrato individual
+            type: image
+            description: Se preencher, a posição na foto de grupo deixa de ser usada.
+
+  - name: banda
+    label: Banda e contato
+    type: file
+    path: content/banda.json
+    format: json
+    fields:
+      - name: name
+        label: Nome da banda
+        type: string
+        required: true
+      - name: tagline
+        label: Estilo
+        type: string
+        required: true
+      - name: claim
+        label: Frase da banda
+        type: string
+        required: true
+      - name: city
+        label: Cidade
+        type: string
+        required: true
+      - name: email
+        label: E-mail de contato
+        type: string
+        required: true
+      - name: whatsapp
+        label: WhatsApp
+        type: string
+        required: true
+        description: "Só números, com país e DDD: 5531999999999"
+      - name: phoneLabel
+        label: Telefone como aparece no site
+        type: string
+        required: true
+        description: "Exemplo: (31) 9 9999-9999"
+      - name: instagram
+        label: Instagram
+        type: string
+        description: Endereço completo, com https://
+      - name: youtube
+        label: YouTube
+        type: string
+      - name: spotify
+        label: Spotify
+        type: string
+
+settings:
+  content:
+    merge: true

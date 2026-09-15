@@ -1,0 +1,29 @@
+{
+  "members": [
+    {
+      "name": "Davisson",
+      "role": "Voz / baixo",
+      "framePosition": "5%"
+    },
+    {
+      "name": "Alan",
+      "role": "Voz / guitarra / violão",
+      "framePosition": "27%"
+    },
+    {
+      "name": "Lauro",
+      "role": "Voz / guitarra",
+      "framePosition": "49%"
+    },
+    {
+      "name": "Wither",
+      "role": "Bateria",
+      "framePosition": "70%"
+    },
+    {
+      "name": "Vanildo",
+      "role": "Teclado",
+      "framePosition": "92%"
+    }
+  ]
+}

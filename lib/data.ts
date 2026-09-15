@@ -1,8 +1,22 @@
 /* ──────────────────────────────────────────────────────────
    CONTEÚDO DO SITE
-   Este é o único arquivo que você precisa editar para mudar
-   músicas, álbuns, shows, vídeos, fotos e integrantes.
+
+   Os dados moram em /content, em arquivos JSON — é de lá que o
+   painel de administração lê e escreve. Este arquivo só dá tipo
+   a eles e guarda as funções de apoio.
+
+   Para mudar o conteúdo, use o painel. Mexer no JSON à mão
+   também funciona; mexer aqui só é necessário para mudar as
+   regras, não o conteúdo.
    ────────────────────────────────────────────────────────── */
+
+import bandaJson from "@/content/banda.json";
+import integrantesJson from "@/content/integrantes.json";
+import faixasJson from "@/content/faixas.json";
+import albunsJson from "@/content/albuns.json";
+import showsJson from "@/content/shows.json";
+import videosJson from "@/content/videos.json";
+import fotosJson from "@/content/fotos.json";
 
 export type Track = {
   /** identificador único, usado na URL e no player */
@@ -62,112 +76,25 @@ export type Photo = {
   ratio: number;
 };
 
-/* ── BANDA ─────────────────────────────────────────────── */
+/* ── DADOS ─────────────────────────────────────────────── */
+/* O JSON chega com tipos largos (string no lugar das uniões, por
+   exemplo), por isso a afirmação de tipo aqui. O painel valida os
+   campos na hora de salvar, seguindo o mesmo formato de .pages.yml. */
 
-export const band = {
-  name: "Senhor Lakes",
-  tagline: "Pop rock ao vivo",
-  claim: "Mais que música. Boas histórias.",
-  city: "Sete Lagoas, MG",
-  email: "contato@senhorlakes.com.br",
-  /** formato internacional, só dígitos — usado no link do WhatsApp */
-  whatsapp: "5531998765432",
-  phoneLabel: "(31) 9 9876-5432",
-  instagram: "https://instagram.com/senhorlakes",
-  youtube: "https://youtube.com/@senhorlakes",
-  spotify: "",
-};
-
-/* framePosition = qual pessoa da foto de grupo aparece no card.
-   Da esquerda para a direita: 5% · 27% · 49% · 70% · 92%.
-   Quando houver retrato individual, preencha `photo` e a posição
-   passa a ser ignorada. */
-export const members: Member[] = [
-  { name: "Davisson", role: "Voz / baixo", framePosition: "5%" },
-  { name: "Alan", role: "Voz / guitarra / violão", framePosition: "27%" },
-  { name: "Lauro", role: "Voz / guitarra", framePosition: "49%" },
-  { name: "Wither", role: "Bateria", framePosition: "70%" },
-  { name: "Vanildo", role: "Teclado", framePosition: "92%" },
-];
-
-/* ── FAIXAS ────────────────────────────────────────────── */
-/* As durações abaixo foram lidas dos arquivos reais em /public/audio. */
-
-export const tracks: Track[] = [
-  { slug: "carla", title: "Carla", duration: 235, src: "/audio/carla.mp3" },
-  { slug: "dias-atras", title: "Dias Atrás", duration: 253, src: "/audio/dias-atras.mp3" },
-  { slug: "eu-que-nao-amo-voce", title: "Eu Que Não Amo Você", duration: 276, src: "/audio/eu-que-nao-amo-voce.mp3" },
-  { slug: "meu-erro", title: "Meu Erro", duration: 221, src: "/audio/meu-erro.mp3" },
-  { slug: "olhos-certos", title: "Olhos Certos", duration: 233, src: "/audio/olhos-certos.mp3" },
-  { slug: "pescador", title: "Pescador", duration: 304, src: "/audio/pescador.mp3" },
-  { slug: "segredo", title: "Segredo", duration: 196, src: "/audio/segredo.mp3" },
-  { slug: "sem-radar", title: "Sem Radar", duration: 239, src: "/audio/sem-radar.mp3" },
-  { slug: "so-hoje", title: "Só Hoje", duration: 320, src: "/audio/so-hoje.mp3" },
-  { slug: "so-por-meu-prazer", title: "Só Por Meu Prazer", duration: 208, src: "/audio/so-por-meu-prazer.mp3" },
-  { slug: "sua-maneira", title: "Sua Maneira", duration: 203, src: "/audio/sua-maneira.mp3" },
-];
-
-/* ── ÁLBUNS ────────────────────────────────────────────── */
-/* Para criar um novo álbum, copie um bloco e distribua os
-   trackSlugs entre eles. Uma faixa pode estar em mais de um. */
-
-export const albums: Album[] = [
-  {
-    slug: "desde-sempre",
-    title: "Desde Sempre",
-    kind: "Álbum",
-    year: 2026,
-    artwork: "/img/desde-sempre.webp",
-    accent: "#9fc3bd",
-    description:
-      "As gravações que abriram a estrada da banda. Onze faixas registradas do jeito que soam no palco.",
-    trackSlugs: [
-      "carla",
-      "dias-atras",
-      "eu-que-nao-amo-voce",
-      "meu-erro",
-      "olhos-certos",
-      "pescador",
-      "segredo",
-      "sem-radar",
-      "so-hoje",
-      "so-por-meu-prazer",
-      "sua-maneira",
-    ],
-  },
-];
-
-/* ── AGENDA ────────────────────────────────────────────── */
-/* Shows passados somem sozinhos da home. */
-
-export const events: GigEvent[] = [
-  { date: "2026-09-14", city: "Sete Lagoas, MG", venue: "Santa Fé Music Bar" },
-  { date: "2026-09-21", city: "Belo Horizonte, MG", venue: "Mister Rock" },
-  { date: "2026-09-28", city: "Divinópolis, MG", venue: "Garagem 55" },
-];
-
-/* ── VÍDEOS ────────────────────────────────────────────── */
-/* Cole o id do YouTube: youtube.com/watch?v=ESTE_PEDACO   */
-
-export const videos: Video[] = [];
-
-/* ── GALERIA ───────────────────────────────────────────── */
-/* src: null gera um espaço reservado no masonry, para você
-   enxergar o layout antes das fotos reais existirem.
-   Troque por "/img/nome-do-arquivo.jpg" conforme for subindo. */
-
-export const photos: Photo[] = [
-  { id: "p1", src: "/img/banda.jpg", alt: "Senhor Lakes reunidos", category: "retratos", caption: "A formação", ratio: 3 / 2 },
-  { id: "p2", src: null, alt: "Espaço reservado", category: "shows", caption: "Show em Sete Lagoas", ratio: 2 / 3 },
-  { id: "p3", src: null, alt: "Espaço reservado", category: "bastidores", caption: "Passagem de som", ratio: 1 },
-  { id: "p4", src: null, alt: "Espaço reservado", category: "shows", caption: "Plateia cantando junto", ratio: 3 / 2 },
-  { id: "p5", src: null, alt: "Espaço reservado", category: "estrada", caption: "A caminho do próximo", ratio: 4 / 5 },
-  { id: "p6", src: null, alt: "Espaço reservado", category: "retratos", caption: "Lauro", ratio: 2 / 3 },
-  { id: "p7", src: null, alt: "Espaço reservado", category: "bastidores", caption: "Antes de subir", ratio: 3 / 2 },
-  { id: "p8", src: null, alt: "Espaço reservado", category: "shows", caption: "Luz e volume", ratio: 1 },
-  { id: "p9", src: null, alt: "Espaço reservado", category: "estrada", caption: "Estrada de Minas", ratio: 16 / 9 },
-  { id: "p10", src: null, alt: "Espaço reservado", category: "retratos", caption: "Alan", ratio: 4 / 5 },
-];
+export const band = bandaJson;
+export const members = integrantesJson.members as Member[];
+export const tracks = faixasJson.tracks as Track[];
+export const albums = albunsJson.albums as Album[];
+export const events = showsJson.events as GigEvent[];
+export const videos = videosJson.videos as Video[];
+/* O formato da foto é um campo de seleção no painel, e seleção grava
+   texto. Aqui vira número, que é o que o mosaico usa para calcular a
+   altura. Number() aceita tanto "1.5" quanto 1.5, então funciona com
+   o que já estava escrito à mão e com o que o painel gravar. */
+export const photos = fotosJson.photos.map((foto) => ({
+  ...foto,
+  ratio: Number(foto.ratio),
+})) as Photo[];
 
 /* ── HELPERS ───────────────────────────────────────────── */
 

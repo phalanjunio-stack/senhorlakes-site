@@ -1,0 +1,84 @@
+{
+  "photos": [
+    {
+      "id": "p1",
+      "src": "/img/banda.jpg",
+      "alt": "Senhor Lakes reunidos",
+      "category": "retratos",
+      "caption": "A formação",
+      "ratio": 1.5
+    },
+    {
+      "id": "p2",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "shows",
+      "caption": "Show em Sete Lagoas",
+      "ratio": 0.6667
+    },
+    {
+      "id": "p3",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "bastidores",
+      "caption": "Passagem de som",
+      "ratio": 1
+    },
+    {
+      "id": "p4",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "shows",
+      "caption": "Plateia cantando junto",
+      "ratio": 1.5
+    },
+    {
+      "id": "p5",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "estrada",
+      "caption": "A caminho do próximo",
+      "ratio": 0.8
+    },
+    {
+      "id": "p6",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "retratos",
+      "caption": "Lauro",
+      "ratio": 0.6667
+    },
+    {
+      "id": "p7",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "bastidores",
+      "caption": "Antes de subir",
+      "ratio": 1.5
+    },
+    {
+      "id": "p8",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "shows",
+      "caption": "Luz e volume",
+      "ratio": 1
+    },
+    {
+      "id": "p9",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "estrada",
+      "caption": "Estrada de Minas",
+      "ratio": 1.7778
+    },
+    {
+      "id": "p10",
+      "src": null,
+      "alt": "Espaço reservado",
+      "category": "retratos",
+      "caption": "Alan",
+      "ratio": 0.8
+    }
+  ]
+}

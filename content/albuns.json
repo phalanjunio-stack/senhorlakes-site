@@ -1,0 +1,26 @@
+{
+  "albums": [
+    {
+      "slug": "desde-sempre",
+      "title": "Desde Sempre",
+      "kind": "Álbum",
+      "year": 2026,
+      "artwork": "/img/desde-sempre.webp",
+      "accent": "#9fc3bd",
+      "description": "As gravações que abriram a estrada da banda. Onze faixas registradas do jeito que soam no palco.",
+      "trackSlugs": [
+        "carla",
+        "dias-atras",
+        "eu-que-nao-amo-voce",
+        "meu-erro",
+        "olhos-certos",
+        "pescador",
+        "segredo",
+        "sem-radar",
+        "so-hoje",
+        "so-por-meu-prazer",
+        "sua-maneira"
+      ]
+    }
+  ]
+}
