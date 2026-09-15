@@ -18,6 +18,7 @@ import showsJson from "@/content/shows.json";
 import videosJson from "@/content/videos.json";
 import fotosJson from "@/content/fotos.json";
 import historiasJson from "@/content/historias.json";
+import configJson from "@/content/config.json";
 
 export type Track = {
   /** identificador único, usado na URL e no player */
@@ -103,6 +104,9 @@ export type Story = {
    campos na hora de salvar, seguindo o mesmo formato de .pages.yml. */
 
 export const band = bandaJson;
+/* Medição e verificação: ficam em conteúdo, não em código, porque quem
+   cria a conta do Analytics é quem cuida da banda, não quem programa. */
+export const config = configJson;
 export const members = integrantesJson.members as Member[];
 export const tracks = faixasJson.tracks as Track[];
 export const albums = albunsJson.albums as Album[];

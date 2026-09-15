@@ -14,6 +14,25 @@ media:
   output: /img
 
 content:
+  - name: config
+    label: Configurações do site
+    type: file
+    path: content/config.json
+    format: json
+    fields:
+      - name: googleAnalyticsId
+        label: Código do Google Analytics
+        type: string
+        description: >-
+          Começa com G-. Pegue em analytics.google.com, em Administrador →
+          Fluxos de dados. Vazio desliga a medição.
+      - name: googleSiteVerification
+        label: Verificação do Google Search Console
+        type: string
+        description: >-
+          Só o código, sem a tag inteira. Aparece em search.google.com/search-console
+          ao escolher a verificação por tag HTML.
+
   - name: shows
     label: Agenda de shows
     type: file

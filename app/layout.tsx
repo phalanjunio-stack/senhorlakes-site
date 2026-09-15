@@ -7,7 +7,8 @@ import { PlayerProvider } from "@/components/player/PlayerProvider";
 import PlayerBar from "@/components/player/PlayerBar";
 import { FxProvider } from "@/components/fx/FxProvider";
 import FxControls from "@/components/fx/FxControls";
-import { band, members } from "@/lib/data";
+import Analytics from "@/components/Analytics";
+import { band, config, members } from "@/lib/data";
 import { asset, siteUrl } from "@/lib/site";
 
 const outfit = Outfit({
@@ -49,6 +50,12 @@ export const metadata: Metadata = {
     images: ["/img/capa.jpg"],
   },
   icons: { icon: asset("/img/logo.png"), apple: asset("/img/logo.png") },
+  /* A verificação do Search Console só aparece quando preenchida no
+     painel — uma meta vazia não verifica nada e ainda confunde quem lê
+     o código-fonte. */
+  ...(config.googleSiteVerification?.trim()
+    ? { verification: { google: config.googleSiteVerification.trim() } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -84,6 +91,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Ir para o conteúdo
         </a>
+
+        <Analytics />
 
         <FxProvider>
           <PlayerProvider>
