@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Oswald } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -10,12 +10,10 @@ import FxControls from "@/components/fx/FxControls";
 import { band, members } from "@/lib/data";
 import { asset, siteUrl } from "@/lib/site";
 
-/* Oswald vai até 700 (não tem 800). Onde o CSS pede font-weight 800 o
-   navegador usa o topo da faixa — como é fonte variável, sai limpo. */
-const oswald = Oswald({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-oswald",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -74,7 +72,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="pt-BR" className={`${oswald.variable} ${inter.variable}`}>
+    <html lang="pt-BR" className={`${outfit.variable} ${inter.variable}`}>
       <body className="antialiased">
         <script
           type="application/ld+json"

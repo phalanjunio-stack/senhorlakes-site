@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown, Play } from "lucide-react";
 import Reveal from "@/components/Reveal";
@@ -9,6 +9,7 @@ import { useFx } from "@/components/fx/FxProvider";
 import { useParallax } from "@/components/fx/useParallax";
 import { InstagramIcon, WhatsappIcon, YoutubeIcon } from "@/components/icons/Social";
 import { band, whatsappLink } from "@/lib/data";
+import { asset } from "@/lib/site";
 
 const socials = [
   { href: band.instagram, label: "Instagram", Icon: InstagramIcon },
@@ -41,42 +42,65 @@ export default function Hero() {
       aria-labelledby="hero-title"
     >
       {/* foto em tela cheia — anda ao contrário do ponteiro */}
+      {/* No celular a moldura é exata e sem zoom: qualquer sobra faria a
+          arte ser cortada, e ela é uma composição fechada — cortar as
+          laterais come os integrantes das pontas. No desktop a sobra de
+          4% e o zoom continuam, porque é o que dá folga para o parallax
+          mexer a foto sem mostrar borda. */}
       <div
-        className="absolute inset-[-4%]"
+        className="absolute inset-0 [--hero-zoom:1] md:inset-[-4%] md:[--hero-zoom:1.03]"
         style={{
           transform:
-            "translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -16px), 0) scale(1.03)",
+            "translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -16px), 0) scale(var(--hero-zoom))",
         }}
       >
+        {/* Duas artes diferentes, não a mesma recortada: a deitada corta
+            os integrantes quando a tela é um retângulo em pé. O <picture>
+            deixa o navegador baixar só a que ele vai usar — next/image
+            não faz troca por tamanho de tela, e como o loader deste
+            projeto não otimiza nada, não se perde nada usando <img>. */}
+
         {/* Camada de baixo: a arte dessaturada. É o que se vê parado. */}
-        <Image
-          src="/img/capa.jpg"
-          alt="Os integrantes do Senhor Lakes"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[center_38%] grayscale contrast-[1.08] brightness-[0.88]"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile.webp")} />
+          <img
+            src={asset("/img/capa.jpg")}
+            alt="Os integrantes do Senhor Lakes"
+            fetchPriority="high"
+            className="absolute inset-0 size-full object-contain object-top grayscale contrast-[1.08] brightness-[0.88] md:object-cover md:object-[center_38%]"
+          />
+        </picture>
 
         {/* Camada de cima: a mesma arte colorida, recortada por uma
             máscara redonda que segue o cursor. O alt fica vazio porque
             é a mesma imagem da camada de baixo. */}
-        <Image
-          src="/img/capa.jpg"
-          alt=""
-          aria-hidden
-          fill
-          priority
-          sizes="100vw"
-          className="spotlight object-cover object-[center_38%]"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile.webp")} />
+          <img
+            src={asset("/img/capa.jpg")}
+            alt=""
+            aria-hidden
+            fetchPriority="high"
+            className="spotlight absolute inset-0 size-full object-contain object-top md:object-cover md:object-[center_38%]"
+          />
+        </picture>
       </div>
 
       {/* Escurecimento só no pé, onde o texto fica. Termina em 64%, bem
           abaixo dos rostos — é isso que deixa o texto legível sem
           apagar ninguém. */}
+      {/* No celular a faixa escura é mais curta: com menos texto por cima,
+          não precisa subir tanto, e assim sobra mais arte à mostra. */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 md:hidden"
+        aria-hidden
+        style={{
+          background:
+            "linear-gradient(to top, #16181b 0%, rgba(22,24,27,0.92) 14%, rgba(22,24,27,0.5) 30%, transparent 46%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 hidden md:block"
         aria-hidden
         style={{
           background:
@@ -131,7 +155,9 @@ export default function Hero() {
           </Reveal>
         </h1>
 
-        <Reveal delay={160}>
+        {/* Some no celular: ali a arte é o argumento, e cada linha de
+            texto a mais empurra a banda para trás do escurecimento. */}
+        <Reveal delay={160} className="hidden md:block">
           <p className="mt-6 max-w-md text-lg text-paper/90">
             Energia, presença e som ao vivo. Cinco histórias, um só som.
           </p>
@@ -160,7 +186,7 @@ export default function Hero() {
                 secondary.burst();
                 play("open");
               }}
-              className="smoke-glow font-display inline-flex items-center gap-2 rounded-full border border-white/45 bg-white/10 px-6 py-3 text-sm font-semibold tracking-[0.12em] text-paper uppercase backdrop-blur-sm transition hover:scale-[1.04] hover:border-accent hover:text-accent"
+              className="smoke-glow font-display hidden items-center gap-2 rounded-full border border-white/45 bg-white/10 px-6 py-3 text-sm font-semibold tracking-[0.12em] text-paper uppercase backdrop-blur-sm transition hover:scale-[1.04] hover:border-accent hover:text-accent md:inline-flex"
             >
               <Glow ripple={secondary.ripple} />
               Ver agenda <ArrowUpRight size={15} />
@@ -168,7 +194,8 @@ export default function Hero() {
           </div>
         </Reveal>
 
-        <Reveal delay={320}>
+        {/* Some no celular: as mesmas redes estão no rodapé e em Contato. */}
+        <Reveal delay={320} className="hidden md:block">
           <nav
             className="mt-8 flex flex-wrap gap-x-7 gap-y-3 pr-20 lg:pr-0"
             aria-label="Redes sociais da banda"

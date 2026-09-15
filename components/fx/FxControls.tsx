@@ -95,6 +95,10 @@ export default function FxControls() {
           {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
         </button>
 
+        {/* Só no desktop. Num celular o movimento já nasce desligado (não
+            há ponteiro para mover nada) e a arte já aparece colorida, com
+            a lupa perdendo a máscara em telas de toque — o botão só
+            oferecia uma opção que ali não muda quase nada. */}
         <button
           type="button"
           onClick={() => {
@@ -102,7 +106,7 @@ export default function FxControls() {
             play(motion ? "close" : "open");
             toggleMotion();
           }}
-          className={`${button} ${motion ? "text-accent" : "text-muted"}`}
+          className={`${button} ${motion ? "text-accent" : "text-muted"} hidden md:grid`}
           aria-pressed={motion}
           aria-label={motion ? "Desligar animações" : "Ligar animações"}
           title={motion ? "Movimento: ligado" : "Movimento: desligado"}

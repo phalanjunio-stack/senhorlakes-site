@@ -31,7 +31,7 @@
   --color-olive: #48483c;
   --color-charcoal: #45443f;
 
-  --font-display: var(--font-oswald), "Arial Narrow", Impact, sans-serif;
+  --font-display: var(--font-outfit), "Segoe UI", Arial, sans-serif;
   --font-sans: var(--font-inter), "Segoe UI", Arial, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
