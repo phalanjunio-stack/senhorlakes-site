@@ -701,21 +701,26 @@ a {
     );
   }
 
-  /* acende só enquanto o ponteiro estiver dentro da seção */
-  .motion-on .is-pointing .spotlight {
+  /* Acende enquanto o ponteiro — ou o dedo — estiver sobre a seção.
+     Não depende do botão de movimento: no celular ele nem existe, e
+     colorir não é movimento, é revelação. */
+  .is-pointing .spotlight {
     opacity: 1;
   }
 
-  /* Sem mouse ou com movimento desligado não há como revelar nada,
-     então a imagem aparece colorida e inteira. */
-  html:not(.motion-on) .spotlight {
-    opacity: 1;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
+  /* No toque a lupa é menor: a tela é estreita e um círculo do tamanho
+     do desktop coloriria quase tudo de uma vez. */
   @media (pointer: coarse) {
     .spotlight {
+      --spot: 9rem;
+    }
+  }
+
+  /* Só vale para quem tem mouse: com o movimento desligado não há como
+     revelar nada, então a imagem aparece colorida e inteira. Em tela de
+     toque esta regra não entra — lá o dedo faz o papel do cursor. */
+  @media (pointer: fine) {
+    html:not(.motion-on) .spotlight {
       opacity: 1;
       -webkit-mask-image: none;
       mask-image: none;

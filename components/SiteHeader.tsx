@@ -48,14 +48,24 @@ export default function SiteHeader() {
         scrolled || open ? "border-b border-[var(--line)] bg-ink/85 backdrop-blur-md" : ""
       }`}
     >
-      <div className="page-width flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label={`${band.name} — início`}>
+      {/* No celular a logo fica centralizada e maior: sem o título escrito
+          sobre a arte, ela virou a única assinatura da página, e no canto
+          se perdia. O posicionamento absoluto tira ela do fluxo, então o
+          centro é o da tela — e não o do espaço que sobra ao lado do
+          botão de menu. No desktop nada muda: continua à esquerda, na
+          linha do menu. */}
+      <div className="page-width relative flex h-20 items-center justify-between gap-6 lg:h-20">
+        <Link
+          href="/"
+          className="absolute left-1/2 flex shrink-0 -translate-x-1/2 items-center gap-3 lg:static lg:translate-x-0"
+          aria-label={`${band.name} — início`}
+        >
           <Image
             src="/img/logo.png"
             alt=""
             width={54}
             height={64}
-            className="logo-breathe h-14 w-auto lg:h-16"
+            className="logo-breathe h-16 w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] lg:h-16 lg:drop-shadow-none"
             priority
           />
         </Link>
@@ -87,7 +97,7 @@ export default function SiteHeader() {
             play(open ? "close" : "open");
             setOpen((value) => !value);
           }}
-          className="grid size-10 place-items-center text-paper lg:hidden"
+          className="ml-auto grid size-10 place-items-center text-paper lg:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? "Fechar menu" : "Abrir menu"}

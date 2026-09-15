@@ -13,6 +13,16 @@ import { useFx } from "./FxProvider";
  *   atraso. Serve para o holofote de cor, que precisa ficar embaixo do
  *   cursor e não atrás dele.
  * - a classe `is-pointing` enquanto o ponteiro estiver dentro.
+ *
+ * Mouse e dedo fazem coisas diferentes de propósito. O mouse move a
+ * imagem e acende a cor; o dedo só acende a cor. Mexer a foto embaixo
+ * do dedo que a está colorindo dá a impressão de que ela escorregou —
+ * e no celular o movimento já nasce desligado de qualquer forma.
+ *
+ * O toque é lido por eventos de touch, não de pointer: quando a pessoa
+ * arrasta para rolar a página, o navegador cancela os eventos de
+ * pointer, e a lupa apagaria no meio do gesto. O touchmove continua
+ * chegando (e é passivo, então a rolagem não é atrapalhada).
  */
 export function useParallax<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -21,12 +31,6 @@ export function useParallax<T extends HTMLElement>() {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-
-    if (!motion) {
-      element.style.setProperty("--mx", "0");
-      element.style.setProperty("--my", "0");
-      return;
-    }
 
     let targetX = 0;
     let targetY = 0;
@@ -61,31 +65,62 @@ export function useParallax<T extends HTMLElement>() {
       frame = moving ? requestAnimationFrame(render) : null;
     };
 
-    const onMove = (event: PointerEvent) => {
-      if (event.pointerType !== "mouse") return;
+    /** Aponta a lupa. `arrasta` diz se a imagem também acompanha. */
+    const apontar = (clientX: number, clientY: number, arrasta: boolean) => {
       const rect = element.getBoundingClientRect();
-      const ratioX = (event.clientX - rect.left) / rect.width;
-      const ratioY = (event.clientY - rect.top) / rect.height;
-      targetX = clamp((ratioX - 0.5) * 2);
-      targetY = clamp((ratioY - 0.5) * 2);
+      const ratioX = (clientX - rect.left) / rect.width;
+      const ratioY = (clientY - rect.top) / rect.height;
       targetPx = ratioX * 100;
       targetPy = ratioY * 100;
+      if (arrasta) {
+        targetX = clamp((ratioX - 0.5) * 2);
+        targetY = clamp((ratioY - 0.5) * 2);
+      }
       element.classList.add("is-pointing");
       if (frame === null) frame = requestAnimationFrame(render);
     };
 
-    const onLeave = () => {
+    const apagar = () => {
       targetX = 0;
       targetY = 0;
       element.classList.remove("is-pointing");
       if (frame === null) frame = requestAnimationFrame(render);
     };
 
-    element.addEventListener("pointermove", onMove);
-    element.addEventListener("pointerleave", onLeave);
+    /* ── Mouse: move a imagem e acende a cor ─────────────── */
+    const onMouseMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      apontar(event.clientX, event.clientY, true);
+    };
+
+    /* ── Dedo: só acende a cor ───────────────────────────── */
+    const onToque = (event: TouchEvent) => {
+      const toque = event.touches[0];
+      if (toque) apontar(toque.clientX, toque.clientY, false);
+    };
+
+    if (motion) {
+      element.addEventListener("pointermove", onMouseMove);
+      element.addEventListener("pointerleave", apagar);
+    } else {
+      /* Com o movimento desligado a imagem fica parada, mas os valores
+         precisam existir zerados — as camadas leem essas variáveis. */
+      element.style.setProperty("--mx", "0");
+      element.style.setProperty("--my", "0");
+    }
+
+    element.addEventListener("touchstart", onToque, { passive: true });
+    element.addEventListener("touchmove", onToque, { passive: true });
+    element.addEventListener("touchend", apagar, { passive: true });
+    element.addEventListener("touchcancel", apagar, { passive: true });
+
     return () => {
-      element.removeEventListener("pointermove", onMove);
-      element.removeEventListener("pointerleave", onLeave);
+      element.removeEventListener("pointermove", onMouseMove);
+      element.removeEventListener("pointerleave", apagar);
+      element.removeEventListener("touchstart", onToque);
+      element.removeEventListener("touchmove", onToque);
+      element.removeEventListener("touchend", apagar);
+      element.removeEventListener("touchcancel", apagar);
       element.classList.remove("is-pointing");
       if (frame !== null) cancelAnimationFrame(frame);
     };
