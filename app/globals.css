@@ -298,12 +298,14 @@ a {
 /* A logo respira devagar: sobe e desce alguns pixels com uma inclinação
    mínima. O ciclo é longo (9s) de propósito — o olho percebe que a peça
    está viva sem que o movimento dispute atenção com o menu ao lado.
-   Só roda com o movimento ligado, como todo o resto desta camada. */
+
+   Esta e a seta do topo são as únicas da camada que não dependem do
+   botão de movimento: são lentas e discretas, e no celular o botão nem
+   existe — exigir ele ali deixaria as duas paradas para sempre. Quem
+   pede "reduzir movimento" no sistema continua sem nenhuma das duas,
+   pela regra lá de cima. */
 .logo-breathe {
   transform-origin: 50% 70%;
-}
-
-.motion-on .logo-breathe {
   animation: logo-breathe 9s ease-in-out infinite;
   will-change: transform;
 }
@@ -321,10 +323,22 @@ a {
   }
 }
 
+/* No celular a arte não para num corte reto: a máscara apaga a base da
+   imagem e deixa o fundo da própria página aparecer por baixo. Como o
+   fundo do site é o mesmo em toda a página, a emenda com a seção
+   seguinte some — e o texto ganha um lugar escuro para se apoiar sem
+   precisar de um véu pesado por cima da banda. */
+@media (max-width: 767px) {
+  .hero-art {
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 28%);
+    mask-image: linear-gradient(to top, transparent 0%, #000 28%);
+  }
+}
+
 /* Seta do hero: um empurrãozinho para baixo, não um pulo para cima —
    o gesto aponta para onde a página continua. Portada da galeria da
-   Contourline, com a mesma regra de movimento do resto daqui. */
-.motion-on .scroll-cue {
+   Contourline. */
+.scroll-cue {
   animation: scroll-cue 1.9s ease-in-out infinite;
 }
 

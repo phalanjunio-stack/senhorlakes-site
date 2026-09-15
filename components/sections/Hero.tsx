@@ -42,13 +42,14 @@ export default function Hero() {
       aria-labelledby="hero-title"
     >
       {/* foto em tela cheia — anda ao contrário do ponteiro */}
-      {/* No celular a moldura é exata e sem zoom: qualquer sobra faria a
-          arte ser cortada, e ela é uma composição fechada — cortar as
-          laterais come os integrantes das pontas. No desktop a sobra de
-          4% e o zoom continuam, porque é o que dá folga para o parallax
-          mexer a foto sem mostrar borda. */}
+      {/* No celular a moldura é exata e sem zoom. A arte de celular foi
+          feita mais alta que qualquer telefone, então ela cobre a tela
+          sobrando em altura — e o object-bottom joga essa sobra para o
+          topo, onde só há textura. Os integrantes nunca são cortados.
+          No desktop a sobra de 4% e o zoom continuam, porque é o que dá
+          folga para o parallax mexer a foto sem mostrar borda. */}
       <div
-        className="absolute inset-0 [--hero-zoom:1] md:inset-[-4%] md:[--hero-zoom:1.03]"
+        className="hero-art absolute inset-0 [--hero-zoom:1] md:inset-[-4%] md:[--hero-zoom:1.03]"
         style={{
           transform:
             "translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -16px), 0) scale(var(--hero-zoom))",
@@ -62,12 +63,12 @@ export default function Hero() {
 
         {/* Camada de baixo: a arte dessaturada. É o que se vê parado. */}
         <picture>
-          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile.webp")} />
+          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile-full.webp")} />
           <img
             src={asset("/img/capa.jpg")}
             alt="Os integrantes do Senhor Lakes"
             fetchPriority="high"
-            className="absolute inset-0 size-full object-contain object-top grayscale contrast-[1.08] brightness-[0.88] md:object-cover md:object-[center_38%]"
+            className="absolute inset-0 size-full object-cover object-bottom grayscale contrast-[1.08] brightness-[0.88] md:object-[center_38%]"
           />
         </picture>
 
@@ -75,13 +76,13 @@ export default function Hero() {
             máscara redonda que segue o cursor. O alt fica vazio porque
             é a mesma imagem da camada de baixo. */}
         <picture>
-          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile.webp")} />
+          <source media="(max-width: 767px)" srcSet={asset("/img/capa-mobile-full.webp")} />
           <img
             src={asset("/img/capa.jpg")}
             alt=""
             aria-hidden
             fetchPriority="high"
-            className="spotlight absolute inset-0 size-full object-contain object-top md:object-cover md:object-[center_38%]"
+            className="spotlight absolute inset-0 size-full object-cover object-bottom md:object-[center_38%]"
           />
         </picture>
       </div>
@@ -96,7 +97,7 @@ export default function Hero() {
         aria-hidden
         style={{
           background:
-            "linear-gradient(to top, #16181b 0%, rgba(22,24,27,0.92) 14%, rgba(22,24,27,0.5) 30%, transparent 46%)",
+            "linear-gradient(to top, rgba(22,24,27,0.72) 0%, rgba(22,24,27,0.34) 18%, transparent 34%)",
         }}
       />
       <div
@@ -186,7 +187,7 @@ export default function Hero() {
                 secondary.burst();
                 play("open");
               }}
-              className="smoke-glow font-display hidden items-center gap-2 rounded-full border border-white/45 bg-white/10 px-6 py-3 text-sm font-semibold tracking-[0.12em] text-paper uppercase backdrop-blur-sm transition hover:scale-[1.04] hover:border-accent hover:text-accent md:inline-flex"
+              className="smoke-glow font-display inline-flex items-center gap-2 rounded-full border border-white/45 bg-white/10 px-6 py-3 text-sm font-semibold tracking-[0.12em] text-paper uppercase backdrop-blur-sm transition hover:scale-[1.04] hover:border-accent hover:text-accent"
             >
               <Glow ripple={secondary.ripple} />
               Ver agenda <ArrowUpRight size={15} />
@@ -225,7 +226,7 @@ export default function Hero() {
         href="#banda"
         onClick={() => play("navigate")}
         aria-label="Rolar para a seção A Banda"
-        className="group absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1.5 sm:flex"
+        className="group absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5"
       >
         <span className="font-display text-[10px] font-semibold tracking-[0.2em] text-paper/60 uppercase opacity-0 transition-opacity group-hover:opacity-100">
           Veja mais
