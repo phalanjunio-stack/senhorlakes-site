@@ -20,6 +20,23 @@ import fotosJson from "@/content/fotos.json";
 import historiasJson from "@/content/historias.json";
 import configJson from "@/content/config.json";
 
+export type Band = {
+  name: string;
+  tagline: string;
+  claim: string;
+  city: string;
+  email: string;
+  whatsapp: string;
+  phoneLabel: string;
+  /* O painel não grava campo de texto vazio — ele simplesmente some do
+     JSON. Sem essas interrogações, deixar o Spotify em branco derrubava
+     o build inteiro e o site parava de atualizar, sem aviso nenhum para
+     quem salvou. Aconteceu de verdade. */
+  instagram?: string;
+  youtube?: string;
+  spotify?: string;
+};
+
 export type Track = {
   /** identificador único, usado na URL e no player */
   slug: string;
@@ -103,7 +120,7 @@ export type Story = {
    exemplo), por isso a afirmação de tipo aqui. O painel valida os
    campos na hora de salvar, seguindo o mesmo formato de .pages.yml. */
 
-export const band = bandaJson;
+export const band = bandaJson as Band;
 /* Medição e verificação: ficam em conteúdo, não em código, porque quem
    cria a conta do Analytics é quem cuida da banda, não quem programa. */
 export const config = configJson;

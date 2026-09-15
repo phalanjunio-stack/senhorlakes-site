@@ -49,26 +49,32 @@ export default function SiteFooter() {
               <span className="flex-1">{band.phoneLabel}</span>
               <ArrowUpRight size={15} className="shrink-0 text-muted" />
             </a>
-            <a
-              href={band.instagram}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group flex items-center gap-3 border-b border-[var(--line)] pb-4 transition hover:text-accent"
-            >
-              <InstagramIcon size={18} className="shrink-0 text-muted transition group-hover:text-accent" />
-              <span className="flex-1">Instagram</span>
-              <ArrowUpRight size={15} className="shrink-0 text-muted" />
-            </a>
-            <a
-              href={band.youtube}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group flex items-center gap-3 border-b border-[var(--line)] pb-4 transition hover:text-accent"
-            >
-              <YoutubeIcon size={18} className="shrink-0 text-muted transition group-hover:text-accent" />
-              <span className="flex-1">YouTube</span>
-              <ArrowUpRight size={15} className="shrink-0 text-muted" />
-            </a>
+            {/* Rede sem endereço preenchido não vira link: um <a> sem href
+                continua com cara de clicável e não leva a lugar nenhum. */}
+            {band.instagram && (
+              <a
+                href={band.instagram}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex items-center gap-3 border-b border-[var(--line)] pb-4 transition hover:text-accent"
+              >
+                <InstagramIcon size={18} className="shrink-0 text-muted transition group-hover:text-accent" />
+                <span className="flex-1">Instagram</span>
+                <ArrowUpRight size={15} className="shrink-0 text-muted" />
+              </a>
+            )}
+            {band.youtube && (
+              <a
+                href={band.youtube}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex items-center gap-3 border-b border-[var(--line)] pb-4 transition hover:text-accent"
+              >
+                <YoutubeIcon size={18} className="shrink-0 text-muted transition group-hover:text-accent" />
+                <span className="flex-1">YouTube</span>
+                <ArrowUpRight size={15} className="shrink-0 text-muted" />
+              </a>
+            )}
           </div>
         </Reveal>
 
