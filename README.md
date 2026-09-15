@@ -11,62 +11,90 @@ npm run dev
 
 Abre em http://localhost:3000.
 
-## Onde mexer
+## Painel de administração
 
-**Praticamente tudo está em [`lib/data.ts`](lib/data.ts).** Você não precisa abrir
-mais nenhum arquivo para atualizar o conteúdo do site.
+**https://app.pagescms.org** — entre com a conta do GitHub e escolha este
+repositório. Não precisa instalar nada nem mexer em código.
 
-| O que mudar | Onde |
+O painel tem sete seções: agenda de shows, galeria de fotos, vídeos, álbuns,
+músicas, integrantes e contato. Fotos são enviadas arrastando para o campo.
+
+Quando você salva, o painel faz um commit aqui; o GitHub Actions reconstrói o
+site e publica sozinho. Leva cerca de dois minutos até aparecer no ar.
+
+Os formulários são descritos em [`.pages.yml`](.pages.yml) — mexer nesse arquivo
+muda os campos que aparecem no painel.
+
+## Onde mexer no conteúdo sem o painel
+
+O conteúdo fica em **[`content/`](content)**, em arquivos JSON. Editar
+direto ali funciona igual — o painel só é uma forma mais confortável.
+
+| O que mudar | Arquivo |
 | --- | --- |
-| E-mail, WhatsApp, Instagram, YouTube | `band` |
-| Integrantes | `members` |
-| Músicas | `tracks` |
-| Álbuns e playlists | `albums` |
-| Shows | `events` |
-| Vídeos | `videos` |
-| Fotos da galeria | `photos` |
+| E-mail, WhatsApp, Instagram, YouTube | `content/banda.json` |
+| Integrantes | `content/integrantes.json` |
+| Músicas | `content/faixas.json` |
+| Álbuns e playlists | `content/albuns.json` |
+| Shows | `content/shows.json` |
+| Vídeos | `content/videos.json` |
+| Fotos da galeria | `content/fotos.json` |
 
-### Adicionar uma música
+[`lib/data.ts`](lib/data.ts) lê esses arquivos, dá tipo a eles e guarda as
+funções de apoio. Só mexa nele para mudar as regras, não o conteúdo.
 
-1. Coloque o arquivo em `public/audio/`.
-2. Acrescente uma linha em `tracks` com `slug`, `title`, `duration` (em segundos)
-   e `src`.
-3. Cite o `slug` em `trackSlugs` de algum álbum.
+### Adicionar um show
 
-Para descobrir a duração: `ffprobe -v quiet -show_format public/audio/arquivo.mp3`.
+No painel, seção **Agenda de shows**. Data, cidade e local são obrigatórios; o
+link de detalhes é opcional.
 
-### Criar um álbum
+Shows que já passaram somem da home **na próxima vez que o site for
+reconstruído** — e não sozinhos no navegador de quem visita. Como qualquer
+alteração no painel reconstrói o site, na prática eles somem quando você mexer
+em qualquer coisa. Se ficar muito tempo sem mexer, um show vencido pode
+continuar aparecendo.
 
-Copie um bloco de `albums` e troque `slug`, `title`, `kind`, `accent` e a lista
-`trackSlugs`. A mesma música pode aparecer em vários álbuns — é assim que as
-playlists funcionam.
+### Adicionar fotos
 
-Enquanto `artwork` for `null`, a capa é desenhada automaticamente a partir da cor
-`accent`. Para usar a arte real, salve a imagem quadrada em `public/img/` e
-aponte: `artwork: "/img/capa-do-album.jpg"`.
+No painel, seção **Galeria de fotos**. Arraste a imagem para o campo Foto — ela
+sobe para `public/img` sozinha.
+
+O campo **Formato da foto** é o que dá o efeito de mosaico: cada foto ocupa a
+altura proporcional à forma real dela. Escolher errado deixa a imagem
+espremida ou esticada no lugar dela na grade.
+
+As entradas sem foto são espaços reservados, só para enxergar o layout. Apague
+conforme for subindo as fotos de verdade.
 
 ### Adicionar um vídeo
 
-Abra o vídeo no YouTube e copie o trecho depois de `watch?v=`:
-
-```ts
-export const videos: Video[] = [
-  { youtubeId: "dQw4w9WgXcQ", title: "Ao vivo no Santa Fé" },
-];
-```
+No painel, seção **Vídeos**. Abra o vídeo no YouTube e copie só o trecho depois
+de `watch?v=` — em `youtube.com/watch?v=dQw4w9WgXcQ`, o código é `dQw4w9WgXcQ`.
 
 O player do YouTube só carrega depois que a pessoa clica na miniatura — isso
 mantém a página leve e sem rastreadores para quem não assiste.
 
-### Adicionar fotos
+### Adicionar uma música
 
-1. Salve em `public/img/`.
-2. Acrescente uma entrada em `photos` com `src`, `alt`, `category`, `caption` e
-   `ratio` (largura ÷ altura da foto — `3/2` para paisagem, `2/3` para retrato).
+Esta é a única que ainda precisa de um passo fora do painel: **o arquivo MP3
+tem que ser enviado para `public/audio/`** pelo GitHub, porque o painel só sobe
+imagens.
 
-O `ratio` é o que dá o efeito masonry: cada foto ocupa a altura proporcional à
-sua forma real. As entradas com `src: null` são espaços reservados, só para você
-enxergar o layout — apague conforme for subindo as fotos de verdade.
+1. No GitHub, entre em `public/audio` e arraste o MP3 para lá.
+2. No painel, seção **Músicas**, adicione uma entrada com o código, o título, a
+   duração em segundos e o caminho do arquivo (`/audio/nome.mp3`).
+3. Na seção **Álbuns**, cite o código da música na lista de faixas.
+
+Para descobrir a duração: `ffprobe -v quiet -show_format public/audio/arquivo.mp3`.
+Ou veja no seu player e converta — 3:55 são 235 segundos.
+
+### Criar um álbum
+
+No painel, seção **Álbuns e playlists**. A mesma música pode aparecer em vários
+álbuns — é assim que as playlists funcionam.
+
+Sem capa, o site desenha uma automaticamente a partir da cor que você escolher.
+Para usar a arte real, arraste a imagem quadrada para o campo Capa.
 
 ## Antes de publicar
 
