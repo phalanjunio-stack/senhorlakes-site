@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://phalanjunio-stack.github.io/senhorlakes-site</loc>
+<lastmod>2026-09-15T18:36:11.996Z</lastmod>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://phalanjunio-stack.github.io/senhorlakes-site/albuns</loc>
+<lastmod>2026-09-15T18:36:11.996Z</lastmod>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://phalanjunio-stack.github.io/senhorlakes-site/historias</loc>
+<lastmod>2026-09-15T18:36:11.996Z</lastmod>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://phalanjunio-stack.github.io/senhorlakes-site/galeria</loc>
+<lastmod>2026-09-15T18:36:11.996Z</lastmod>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://phalanjunio-stack.github.io/senhorlakes-site/albuns/desde-sempre</loc>
+<lastmod>2026-09-15T18:36:11.996Z</lastmod>
+<priority>0.7</priority>
+</url>
+</urlset>

@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://phalanjunio-stack.github.io/senhorlakes-site/sitemap.xml
