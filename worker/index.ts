@@ -92,8 +92,16 @@ function igualNoTempo(a: Uint8Array, b: Uint8Array): boolean {
  * estavam certos.
  */
 async function senhaConfere(senha: string, guardado: string): Promise<boolean> {
-  const [algoritmo, voltas, salB64, hashB64] = guardado.split("$");
-  if (algoritmo !== "pbkdf2") return false;
+  const [algoritmo, voltas, salB64, hashB64] = (guardado ?? "").split("$");
+
+  /* Valor colado torto — com quebra de linha no meio, faltando um
+     pedaço, vindo de outro formato — não pode derrubar o servidor. Sem
+     esta conferência o código seguia adiante e estourava lá dentro, e
+     quem estava configurando via só um 500 sem explicação. */
+  if (algoritmo !== "pbkdf2" || !voltas || !salB64 || !hashB64 || !Number(voltas)) {
+    console.error("ADMIN_SENHA_HASH está num formato que não reconheço");
+    return false;
+  }
 
   const chave = await crypto.subtle.importKey(
     "raw",
@@ -238,6 +246,20 @@ const json = (corpo: unknown, inicio: ResponseInit = {}) =>
 
 export default {
   async fetch(pedido: Request, env: Env): Promise<Response> {
+    /* Qualquer estouro daqui para dentro vira uma resposta JSON com
+       explicação. Sem isto a Cloudflare devolve a página dela de "error
+       code 1101", que não diz nada a quem está do outro lado e obriga a
+       ir caçar no log. */
+    try {
+      return await atender(pedido, env);
+    } catch (erro) {
+      console.error("estourou:", erro);
+      return json({ erro: "o servidor do painel falhou" }, { status: 500 });
+    }
+  },
+};
+
+async function atender(pedido: Request, env: Env): Promise<Response> {
     const url = new URL(pedido.url);
     const rota = url.pathname;
 
@@ -322,6 +344,5 @@ export default {
       }
     }
 
-    return json({ erro: "rota não existe" }, { status: 404 });
-  },
-};
+  return json({ erro: "rota não existe" }, { status: 404 });
+}
