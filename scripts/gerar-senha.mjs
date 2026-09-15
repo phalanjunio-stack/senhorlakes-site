@@ -36,6 +36,21 @@ function perguntar(pergunta) {
   }));
 }
 
+/* Sem teclado ligado na entrada, a pergunta abaixo recebe vazio e o
+   script reclamaria de "senha curta" — mensagem que manda a pessoa para
+   o lado errado. Melhor dizer o que realmente aconteceu. */
+if (!process.stdin.isTTY) {
+  console.error(`
+Este script precisa ser digitado num terminal, porque ele faz uma
+pergunta e espera você responder.
+
+No Windows: abra o Terminal, vá até a pasta do site e rode
+
+  node scripts/gerar-senha.mjs
+`);
+  process.exit(1);
+}
+
 const senha = (await perguntar("Senha que você quer usar no painel: ")).trim();
 
 if (senha.length < 10) {
