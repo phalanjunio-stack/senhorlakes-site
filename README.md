@@ -105,7 +105,6 @@ canto inferior direito. A preferência fica salva no navegador de quem visita.
 | Efeito | Onde mora | O que faz |
 | --- | --- | --- |
 | Parallax do topo | `components/fx/useParallax.ts` | Publica `--mx` / `--my` (-1 a 1). A foto anda ao contrário do mouse, o letreiro de fundo anda junto e o texto quase não se mexe — é a diferença de velocidade que cria a profundidade. |
-| Cursor próprio | `components/fx/CustomCursor.tsx` | Anel que segue o ponteiro com inércia e cresce mostrando um rótulo. O rótulo vem do atributo `data-cursor` do elemento. |
 | Inclinação 3D | `components/fx/Tilt.tsx` | Cartões de álbum, integrantes e fotos inclinam seguindo o ponteiro e ganham um reflexo no ponto onde ele está. |
 | Glow de faíscas | `components/fx/Glow.tsx` | Aura, halo e quatro faíscas orbitando nos botões, mais um anel que sai no clique. Portado do painel da Contourline. |
 | Efeitos sonoros | `lib/sound.ts` | Nove sons sintetizados na hora pela Web Audio API — zero arquivo de áudio para baixar. |
@@ -153,7 +152,17 @@ no site:
 NEXT_PUBLIC_BASE_PATH=/senhorlakes-site NEXT_PUBLIC_SITE_URL=https://phalanjunio-stack.github.io/senhorlakes-site npm run build
 ```
 
-e publicar o conteúdo de `out/` no branch `gh-pages`.
+No **Git Bash do Windows** esse comando falha: ele traduz `/senhorlakes-site`
+para um caminho do Windows e o build reclama que o basePath não começa com
+`/`. Use o PowerShell:
+
+```powershell
+$env:NEXT_PUBLIC_BASE_PATH = "/senhorlakes-site"; $env:NEXT_PUBLIC_SITE_URL = "https://phalanjunio-stack.github.io/senhorlakes-site"; npm run build
+```
+
+Depois publique o conteúdo de `out/` no branch `gh-pages`. **Crie um arquivo
+vazio `out/.nojekyll` antes de publicar** — sem ele o GitHub Pages ignora a
+pasta `_next/`, e o site sobe sem CSS nem JavaScript.
 
 Para o deploy virar automático a cada push, rode uma vez:
 
