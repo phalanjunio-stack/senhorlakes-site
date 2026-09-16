@@ -53,7 +53,15 @@
     "directory": "./out",
     // Só estes endereços passam pelo código; o resto é arquivo estático
     // servido direto, que é mais rápido e não custa execução.
-    "run_worker_first": ["/api/*"],
+    //
+    // /audio está aí porque a entrega de arquivos estáticos da Cloudflare
+    // ignora pedido de pedaço (Range): o navegador pede "do minuto 2 em
+    // diante" e recebe a música inteira desde o começo, então arrastar a
+    // barra do player volta tudo para o zero. No GitHub Pages funcionava.
+    "run_worker_first": ["/api/*", "/audio/*"],
+    // O código precisa alcançar os arquivos publicados para servir o
+    // áudio pedaço por pedaço.
+    "binding": "ASSETS",
     // O build gera 404.html; sem isto um endereço errado devolve uma
     // página em branco em vez do 404 do site.
     "not_found_handling": "404-page"

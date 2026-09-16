@@ -16,6 +16,8 @@
 import schema from "../content/painel-schema.json";
 
 export interface Env {
+  /** Os arquivos publicados do site, para servir áudio pedaço por pedaço. */
+  ASSETS: { fetch: (pedido: Request) => Promise<Response> };
   /** E-mail que pode entrar. */
   ADMIN_EMAIL: string;
   /** Senha guardada como pbkdf2$iteracoes$sal$hash — nunca em texto puro. */
@@ -281,6 +283,74 @@ async function nomeLivre(nome: string, env: Env): Promise<string> {
 const TIPOS_DE_IMAGEM = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 const TAMANHO_MAXIMO = 12 * 1024 * 1024;
 
+/* ── Áudio ─────────────────────────────────────────────── */
+
+/**
+ * Serve as músicas aceitando pedido de pedaço.
+ *
+ * A entrega de arquivos estáticos da Cloudflare ignora o cabeçalho
+ * Range: o navegador pede "do minuto 2 em diante" e recebe a música
+ * inteira desde o começo. O player então volta para o zero toda vez que
+ * alguém arrasta a barra — que foi exatamente o defeito relatado.
+ *
+ * Aqui o arquivo é buscado inteiro e a fatia pedida é devolvida com 206.
+ * Cinco megabytes na memória de um Worker é folgado, e o ganho é a barra
+ * do player voltar a funcionar.
+ */
+async function servirAudio(pedido: Request, url: URL, env: Env): Promise<Response> {
+  const original = await env.ASSETS.fetch(new Request(url.toString(), { method: "GET" }));
+  if (!original.ok) return original;
+
+  const bytes = new Uint8Array(await original.arrayBuffer());
+  const tipo = original.headers.get("content-type") ?? "audio/mpeg";
+  /* Uma semana de cache: música não muda depois de publicada, e cada
+     pedido evitado é um Worker que não precisa acordar. */
+  const comuns = {
+    "content-type": tipo,
+    "accept-ranges": "bytes",
+    "cache-control": "public, max-age=604800",
+  };
+
+  const alcance = pedido.headers.get("range");
+  if (!alcance) {
+    return new Response(pedido.method === "HEAD" ? null : bytes, {
+      status: 200,
+      headers: { ...comuns, "content-length": String(bytes.length) },
+    });
+  }
+
+  /* "bytes=1000-2000", "bytes=1000-" e "bytes=-500" (os últimos 500). */
+  const pedaco = /^bytes=(\d*)-(\d*)$/.exec(alcance.trim());
+  if (!pedaco || (!pedaco[1] && !pedaco[2])) {
+    return new Response(null, {
+      status: 416,
+      headers: { ...comuns, "content-range": `bytes */${bytes.length}` },
+    });
+  }
+
+  const inicio = pedaco[1] ? Number(pedaco[1]) : bytes.length - Number(pedaco[2]);
+  const fim = pedaco[1] && pedaco[2] ? Number(pedaco[2]) : bytes.length - 1;
+  const de = Math.max(0, inicio);
+  const ate = Math.min(bytes.length - 1, fim);
+
+  if (de > ate) {
+    return new Response(null, {
+      status: 416,
+      headers: { ...comuns, "content-range": `bytes */${bytes.length}` },
+    });
+  }
+
+  const fatia = bytes.subarray(de, ate + 1);
+  return new Response(pedido.method === "HEAD" ? null : fatia, {
+    status: 206,
+    headers: {
+      ...comuns,
+      "content-length": String(fatia.length),
+      "content-range": `bytes ${de}-${ate}/${bytes.length}`,
+    },
+  });
+}
+
 /* ── Respostas ─────────────────────────────────────────── */
 
 const json = (corpo: unknown, inicio: ResponseInit = {}) =>
@@ -309,6 +379,8 @@ export default {
 async function atender(pedido: Request, env: Env): Promise<Response> {
     const url = new URL(pedido.url);
     const rota = url.pathname;
+
+    if (rota.startsWith("/audio/")) return servirAudio(pedido, url, env);
 
     if (!rota.startsWith("/api/")) return new Response("Não encontrado", { status: 404 });
 
