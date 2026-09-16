@@ -63,25 +63,23 @@ export default function LinksPage() {
       />
 
       <div className="relative mx-auto flex w-full max-w-md flex-col items-center">
-        <Image
-          src="/img/logo.png"
-          alt=""
-          width={90}
-          height={107}
-          priority
-          className="logo-breathe h-24 w-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
-        />
-
-        <h1 className="font-display mt-5 text-center text-[clamp(2.4rem,11vw,3.4rem)] leading-[0.85] font-extrabold tracking-[-0.05em] uppercase">
-          {band.name}
+        {/* A logo é o título da página: sem nome escrito embaixo, ela
+            precisa carregar a identidade sozinha. Por isso vai dentro do
+            h1, com o nome da banda no texto alternativo — quem usa
+            leitor de tela ouve "Sr. Lakes" e não "imagem". */}
+        <h1>
+          <Image
+            src="/img/logo.png"
+            alt={band.name}
+            width={180}
+            height={215}
+            priority
+            className="logo-flutua h-40 w-auto sm:h-48"
+          />
         </h1>
 
-        {links.frase && (
-          <p className="mt-3 text-center text-sm leading-relaxed text-muted">{links.frase}</p>
-        )}
-
         {faixa && (
-          <div className="mt-8 w-full">
+          <div className="mt-10 w-full">
             <TocaAgora titulo={faixa.title} src={faixa.src} capa={capa} />
           </div>
         )}

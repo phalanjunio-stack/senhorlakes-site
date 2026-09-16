@@ -310,6 +310,51 @@ a {
   will-change: transform;
 }
 
+/* A logo da página de links.
+
+   Lá ela é a única coisa no topo — carrega sozinha a identidade, sem
+   nome escrito nem frase embaixo. Por isso pode se mexer bem mais que a
+   do cabeçalho do site, onde disputaria atenção com o menu ao lado.
+
+   O brilho dourado pulsa junto com a flutuação, no mesmo compasso: dois
+   ritmos diferentes ficariam nervosos.
+
+   Quem pede "reduzir movimento" no sistema não vê nada disso, pela
+   regra geral lá de cima. */
+.logo-flutua {
+  transform-origin: 50% 70%;
+  animation:
+    logo-flutua 7s ease-in-out infinite,
+    logo-brilho 7s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+@keyframes logo-flutua {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-2.5deg) scale(1.04);
+  }
+  50% {
+    transform: translateY(-2px) rotate(0.6deg) scale(1.012);
+  }
+  75% {
+    transform: translateY(7px) rotate(2.2deg) scale(0.985);
+  }
+}
+
+@keyframes logo-brilho {
+  0%,
+  100% {
+    filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 12px 36px rgba(201, 162, 39, 0.42));
+  }
+}
+
 @keyframes logo-breathe {
   0%,
   100% {

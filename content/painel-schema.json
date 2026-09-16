@@ -24,12 +24,6 @@
     "arquivo": "content/links.json",
     "campos": [
       {
-        "name": "frase",
-        "label": "Frase de baixo do nome",
-        "type": "string",
-        "description": "Uma linha curta. Quem chega aqui veio do Instagram e decide em dois segundos."
-      },
-      {
         "name": "faixa",
         "label": "Música que toca na página",
         "type": "string",
