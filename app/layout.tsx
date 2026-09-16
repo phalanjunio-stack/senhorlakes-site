@@ -18,6 +18,25 @@ const inter = Inter({
   display: "swap",
 });
 
+/**
+ * Limpa o código de verificação do Google.
+ *
+ * Ele aparece de três jeitos, dependendo da tela onde a pessoa copiou:
+ * só o código, "google-site-verification=CÓDIGO" (formato do registro
+ * DNS), ou a tag <meta> inteira. Aceitar os três evita um erro que não
+ * dá aviso nenhum — a verificação simplesmente não verifica, e ninguém
+ * descobre por quê. Aconteceu aqui.
+ */
+function codigoDeVerificacao(bruto?: string): string | null {
+  const texto = (bruto ?? "").trim();
+  if (!texto) return null;
+  const daTag = /content=["']([^"']+)["']/.exec(texto);
+  const limpo = (daTag ? daTag[1] : texto)
+    .replace(/^google-site-verification=/i, "")
+    .trim();
+  return limpo || null;
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -47,8 +66,8 @@ export const metadata: Metadata = {
   /* A verificação do Search Console só aparece quando preenchida no
      painel — uma meta vazia não verifica nada e ainda confunde quem lê
      o código-fonte. */
-  ...(config.googleSiteVerification?.trim()
-    ? { verification: { google: config.googleSiteVerification.trim() } }
+  ...(codigoDeVerificacao(config.googleSiteVerification)
+    ? { verification: { google: codigoDeVerificacao(config.googleSiteVerification)! } }
     : {}),
 };
 

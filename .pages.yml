@@ -30,8 +30,9 @@ content:
         label: Verificação do Google Search Console
         type: string
         description: >-
-          Só o código, sem a tag inteira. Aparece em search.google.com/search-console
-          ao escolher a verificação por tag HTML.
+          Cole do jeito que o Google mostrar — só o código, a linha
+          "google-site-verification=..." ou a tag inteira. O site limpa
+          sozinho e usa só o que interessa.
 
   - name: links
     label: Links do Instagram
