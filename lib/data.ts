@@ -19,6 +19,7 @@ import videosJson from "@/content/videos.json";
 import fotosJson from "@/content/fotos.json";
 import historiasJson from "@/content/historias.json";
 import configJson from "@/content/config.json";
+import linksJson from "@/content/links.json";
 
 export type Band = {
   name: string;
@@ -102,6 +103,14 @@ export type Photo = {
   ratio: number;
 };
 
+export type BotaoDeLink = {
+  rotulo: string;
+  /** decide o ícone e, quando o endereço está vazio, de onde ele vem */
+  tipo: string;
+  url?: string;
+  destaque?: boolean;
+};
+
 export type Story = {
   slug: string;
   /** palavrinha acima do título — "A origem do nome", "Bastidores" */
@@ -135,6 +144,7 @@ export const events = showsJson.events as GigEvent[];
 export const videos = videosJson.videos as Video[];
 /* Mesma conversão das fotos, pelo mesmo motivo: o campo de seleção do
    painel grava texto e o layout precisa de número. */
+export const links = linksJson as { frase?: string; faixa?: string; botoes: BotaoDeLink[] };
 export const stories = historiasJson.stories.map((historia) => ({
   ...historia,
   ratio: Number(historia.ratio),

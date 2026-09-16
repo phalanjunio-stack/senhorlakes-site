@@ -46,6 +46,23 @@ function CampoSimples({
     return <CampoImagem valor={valor} aoMudar={aoMudar} />;
   }
 
+  if (campo.type === "boolean") {
+    return (
+      /* Sem <label> aqui: este campo já é desenhado dentro de um, e
+         <label> dentro de <label> é inválido — o clique passa a valer
+         para o de fora e o leitor de tela anuncia errado. */
+      <div className="flex w-fit items-center gap-2.5">
+        <input
+          type="checkbox"
+          checked={valor === true}
+          onChange={(e) => aoMudar(e.target.checked)}
+          className="size-4 accent-[var(--color-accent)]"
+        />
+        <span className="text-sm text-muted">{valor === true ? "Sim" : "Não"}</span>
+      </div>
+    );
+  }
+
   if (campo.type === "text") {
     /* História e biografia são textos longos de verdade; os outros
        campos de texto do site cabem em quatro linhas. */

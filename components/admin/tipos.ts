@@ -2,7 +2,7 @@
 export type CampoSchema = {
   name: string;
   label: string;
-  type: "string" | "text" | "number" | "date" | "select" | "image" | "object";
+  type: "string" | "text" | "number" | "date" | "select" | "image" | "boolean" | "object";
   list?: boolean;
   required?: boolean;
   description?: string;

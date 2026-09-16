@@ -1,0 +1,37 @@
+{
+  "frase": "Pop rock ao vivo em Sete Lagoas",
+  "faixa": "dias-atras",
+  "botoes": [
+    {
+      "rotulo": "Chamar no WhatsApp",
+      "tipo": "whatsapp",
+      "url": "",
+      "destaque": true
+    },
+    {
+      "rotulo": "Instagram",
+      "tipo": "instagram",
+      "url": ""
+    },
+    {
+      "rotulo": "YouTube",
+      "tipo": "youtube",
+      "url": ""
+    },
+    {
+      "rotulo": "YouTube Music",
+      "tipo": "youtube-music",
+      "url": ""
+    },
+    {
+      "rotulo": "Agenda de shows",
+      "tipo": "agenda",
+      "url": "/#agenda"
+    },
+    {
+      "rotulo": "Ouvir o álbum Desde Sempre",
+      "tipo": "musica",
+      "url": "/albuns/desde-sempre"
+    }
+  ]
+}

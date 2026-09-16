@@ -19,6 +19,97 @@
     ]
   },
   {
+    "chave": "links",
+    "nome": "Links do Instagram",
+    "arquivo": "content/links.json",
+    "campos": [
+      {
+        "name": "frase",
+        "label": "Frase de baixo do nome",
+        "type": "string",
+        "description": "Uma linha curta. Quem chega aqui veio do Instagram e decide em dois segundos."
+      },
+      {
+        "name": "faixa",
+        "label": "Música que toca na página",
+        "type": "string",
+        "description": "O código de uma música da seção Músicas. Ela fica pronta para tocar num botão, sem começar sozinha. Deixe vazio para não ter música."
+      },
+      {
+        "name": "botoes",
+        "label": "Botões",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "rotulo",
+            "label": "Texto do botão",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "tipo",
+            "label": "Ícone",
+            "type": "select",
+            "required": true,
+            "options": {
+              "values": [
+                {
+                  "value": "whatsapp",
+                  "label": "WhatsApp"
+                },
+                {
+                  "value": "instagram",
+                  "label": "Instagram"
+                },
+                {
+                  "value": "youtube",
+                  "label": "YouTube"
+                },
+                {
+                  "value": "youtube-music",
+                  "label": "YouTube Music"
+                },
+                {
+                  "value": "spotify",
+                  "label": "Spotify"
+                },
+                {
+                  "value": "agenda",
+                  "label": "Agenda"
+                },
+                {
+                  "value": "musica",
+                  "label": "Música"
+                },
+                {
+                  "value": "site",
+                  "label": "Site"
+                },
+                {
+                  "value": "link",
+                  "label": "Link comum"
+                }
+              ]
+            }
+          },
+          {
+            "name": "url",
+            "label": "Endereço",
+            "type": "string",
+            "description": "Endereço completo, com https://. Para WhatsApp, Instagram, YouTube e Spotify pode deixar vazio: o botão usa o que está em \"Banda e contato\", e assim você troca num lugar só. Botão sem endereço nenhum não aparece na página."
+          },
+          {
+            "name": "destaque",
+            "label": "Botão principal",
+            "type": "boolean",
+            "description": "Fica maior e colorido. Use em um só — dois destaques não destacam nada."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "chave": "shows",
     "nome": "Agenda de shows",
     "arquivo": "content/shows.json",
